@@ -1,0 +1,30 @@
+= AsciiDocサンプル
+
+これはAsciiDocで記載されたドキュメントです。
+
+== 見出し1
+* aaaaaaaa
+* bbbbbbbb
+
+== ソースコード
+
+[source, javascript]
+----
+    Alert("AsciiDocサンプル");
+----
+
+== インクルード
+
+include::Include.adoc[]
+
+== ユースケース
+
+[plantuml]
+----
+@startuml
+
+:user: --> (Use case 1)
+:user: -> (Use case 2)
+
+@enduml
+----
