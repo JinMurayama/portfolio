@@ -76,7 +76,6 @@ body {
 }
 /* Buttons */
 .btn {
-  padding: 1rem 3rem;
   border-radius: 3px;
 }
 .btn-sm {
@@ -117,8 +116,7 @@ body {
 .btn-primary.focus,
 .btn-primary.active {
   color: #ffffff !important;
-  background-color: #0d6786 !important;
-  border-color: #0d6786 !important;
+  opacity: 0.8;
 }
 .btn-primary.disabled,
 .btn-primary:disabled {
@@ -1255,15 +1253,6 @@ section.lazy-placeholder:after {
 .cid-rUIz7hI3DH .separline {
   position: relative;
 }
-.cid-rUIz7hI3DH .separline:after {
-  top: 68px;
-  left: 30px;
-  position: absolute;
-  content: "";
-  width: 2px;
-  height: calc(100% - (32px + 4px) * 2);
-  background-color: #efefef;
-}
 @media (max-width: 767px) {
   .cid-rUIz7hI3DH .separline:after {
     top: 52px;
@@ -1313,15 +1302,6 @@ section.lazy-placeholder:after {
 }
 .cid-rUIz7M2e67 .separline {
   position: relative;
-}
-.cid-rUIz7M2e67 .separline:after {
-  top: 68px;
-  left: 30px;
-  position: absolute;
-  content: "";
-  width: 2px;
-  height: calc(100% - (32px + 4px) * 2);
-  background-color: #efefef;
 }
 @media (max-width: 767px) {
   .cid-rUIz7M2e67 .separline:after {
@@ -1373,15 +1353,7 @@ section.lazy-placeholder:after {
 .cid-rUIz8gCfHN .separline {
   position: relative;
 }
-.cid-rUIz8gCfHN .separline:after {
-  top: 68px;
-  left: 30px;
-  position: absolute;
-  content: "";
-  width: 2px;
-  height: calc(100% - (32px + 4px) * 2);
-  background-color: #efefef;
-}
+
 @media (max-width: 767px) {
   .cid-rUIz8gCfHN .separline:after {
     top: 52px;
@@ -1431,15 +1403,6 @@ section.lazy-placeholder:after {
 }
 .cid-rUIz95khtN .separline {
   position: relative;
-}
-.cid-rUIz95khtN .separline:after {
-  top: 68px;
-  left: 30px;
-  position: absolute;
-  content: "";
-  width: 2px;
-  height: calc(100% - (32px + 4px) * 2);
-  background-color: #efefef;
 }
 @media (max-width: 767px) {
   .cid-rUIz95khtN .separline:after {
@@ -1606,7 +1569,7 @@ section.lazy-placeholder:after {
 }
 .cid-rUIyjIuUbM .menu-logo .navbar-brand {
   display: flex;
-  margin-left: 5rem;
+  margin-left: 2rem;
   padding: 0;
   transition: padding .2s;
   min-height: 3.8rem;
