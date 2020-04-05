@@ -10,8 +10,9 @@
   <meta name="description" content="Web Site Builder Description">
   
   
-  <title>contact_form</title>
+  <title>Real_Time_Chat</title>
   <link rel="stylesheet" href="CSS/main.css">
+  <link rel="stylesheet" href="CSS/realtimechat.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -26,8 +27,47 @@
   
 </head>
 <body>
+    <div class="message-template">
+    <!-- 受信メッセージのテンプレート -->
+    <div class="message message--received">
+      <div class="message__profile">
+        <img class="message__user-image" src="img/default-profile-image.png" width="46" height="46" alt="プロフィール画像">
+      </div>
+      <div class="message__body">
+        <div class="message__user-name"></div>
+        <div class="message__text"></div>
+        <div class="message__info">
+          <a href="#" class="message__favorite-link">
+            <i class="message__favorite-icon fa fa-star-o"></i>
+          </a>
+          <span class="message__time"></span>
+        </div>
+      </div>
+    </div>
+    <!-- /.message -->
+
+    <!-- 送信メッセージのテンプレート -->
+    <div class="message message--sent">
+      <div class="message__profile">
+        <a href="#settingsModal" data-toggle="modal"><img class="message__user-image"
+            src="img/default-profile-image.png" width="46" height="46" alt="プロフィール画像"></a>
+      </div>
+      <div class="message__body">
+        <div class="message__user-name"></div>
+        <div class="message__text"></div>
+        <div class="message__info">
+          <a href="#" class="message__favorite-link">
+            <i class="message__favorite-icon fa fa-star-o"></i>
+          </a>
+          <span class="message__time"></span>
+        </div>
+      </div>
+    </div>
+    <!-- /.message -->
+  </div>
+  
 <section class="menu cid-rUIyjIuUbM" once="menu" id="menu1-1">
-    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+    <nav id="chat-navbar" class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <div class="hamburger">
                 <span></span>
@@ -98,12 +138,23 @@
   <div class="d-flex justify-content-between" id="chat-contents">
     <div class="d-flex flex-column"id="side-bar">
       <div id="function-contents">
-        <div id="invite">
-          <button type="button" class="btn btn-primary bt-contents">
-            <i class="fas fa-sign-in-alt icon-function"></i>Invite
+        <div id="new_channel">
+          <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
+            <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
           </button>
+          <div id="overlay" v-show="showContent">
+            <div id="content">
+              <p>Public Channelを新規で作成いたします。</p>
+              <form id = "new-channel-form">
+                <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
+                <input id="room-name" type="text">
+                <button class="btn btn-primary" type="submit">新規作成</button>
+              </form>
+              <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
+            </div>
+          </div>
         </div>
-        <div class="d-flex"id="leave-lock">
+<!--        <div class="d-flex"id="leave-lock">
           <div id="leave">
             <button type="button" class="btn btn-light bt-contents">
               <i class="fas fa-sign-out-alt icon-function"></i>Leave 
@@ -114,84 +165,41 @@
               <i class="fas fa-lock icon-function"></i>Lock
             </button>
           </div>
+        </div>  !-->
+        <div id="channel-serach" class="d-flex justify-content-between">
+          <input id="search-input" class="form-control" type="text" placeholder="Search" v-model="search_term">
+           <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
+            Search
+          </button>
         </div>
-        <div id="member-contents">
+        <div id="channel-contents">
           <div id="col-contents">
-            <p class="member-title">member-list</p>
+            <p class="channel-title">Public Channel一覧</p>
           </div>
-          <div id="member-list">
+          <div id="channel-list">
             
           </div>
         </div>
       </div>
     </div>
     <div id="message-bord">
-      konnteu
+         <!-- メッセージ投稿フォーム -->
+      <form id="comment-form">
+        <div class="input-group">
+          <input id="comment-form__text" type="text" class="form-control">
+          <span class="input-group-append">
+            <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>
+        <!-- /.input-group -->
+      </form>
     </div>
   </div>
 </section>
 
-<section once="footers" class="cid-rUIyXodXpH" id="footer7-4">
-    <div class="container">
-        <div class="media-container-row align-center mbr-white">
-            <div class="row row-links">
-                <ul class="foot-menu">
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">about</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">service</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">chat</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">map</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">webhock</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="index.html">mashup</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="row social-row">
-                <div class="social-list align-right pb-2">
-                <div class="soc-item">
-                        <a href="https://twitter.com/mobirise" target="_blank">
-                            <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
-                            <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="https://www.youtube.com/c/mobirise" target="_blank">
-                            <span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="https://instagram.com/mobirise" target="_blank">
-                            <span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
-                            <span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div><div class="soc-item">
-                        <a href="https://www.behance.net/Mobirise" target="_blank">
-                            <span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div></div>
-            </div>
-            <div class="row row-copirayt">
-                <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7">
-                    © Copyright 2020 JIN_PORORTFOLIO
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 
   <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
@@ -206,8 +214,33 @@
   <script src="assets/theme/js/script.js"></script>
   <script src="assets/formoid/formoid.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="JS/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+ 
+  
+    <!-- Firebaseのセットアップコード（下記のSDKのバージョンは6.2.0） -->
+  <!-- The core Firebase JS SDK is always required and must be listed first
+    (中心となるFirebase SDKです。常に必要で、最初に記述する必要があります) -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  
+  <!--    (使いたいFirebaseサービス用のSDKを加えます) -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+  
+  <script>
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCrdY7A95r-MhAdFsYVnyre_DzA3hRPt0Q",
+  authDomain: "realtime-chat-cc9e6.firebaseapp.com",
+  databaseURL: "https://realtime-chat-cc9e6.firebaseio.com",
+  projectId: "realtime-chat-cc9e6",
+  storageBucket: "realtime-chat-cc9e6.appspot.com",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+  </script>
+  
+   <script src="JS/realtimechat.js"></script>
   
 </body>
 </html>

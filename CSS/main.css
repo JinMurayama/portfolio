@@ -12,10 +12,10 @@
 
 .sub-contents{
   margin-top: 50px;
-  margin-left: 160px;
 }
 
 .sub-contents-button{
+  display: inline;
   font-family: inherit;
   padding: 20px 10px;
   background: skyblue;
@@ -28,42 +28,3 @@
   margin-right: 5px;
 }
 
-#main-contents{
-  height: 600px;
-}
-
-#side-bar{
-  width: 20%;
-  padding-right: 5px;
-  margin-right: 20px;
-  border-right: 1px solid black;
-}
-
-.bt-contents{
-  border-radius: 10px;
-  padding: 20px 10px;
-  font-size: 11px;
-}
-
-
-#message-bord{
-  width:80%;
-}
-
-#leave{
-  width: 40%;
-}
-
-#lock{
-  width: 40%;
-}
-
-.member-title{
-  padding: 5px 5px;
-  text-decoration: underline;
-}
-
-#member-contents{
-  border: 1px solid black;
-  margin-left: 13px;
-}

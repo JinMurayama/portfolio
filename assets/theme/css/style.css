@@ -484,7 +484,7 @@ blockquote {
   box-shadow: none;
   color: #565656;
   line-height: 1.43;
-  min-height: 3.5em;
+  min-height: 2.0em;
   padding: 1.07em 0.5em;
 }
 .form-control, .form-control:focus {
