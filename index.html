@@ -9,6 +9,16 @@
   <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
   <meta name="description" content="">
   
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  
+    $('a[href^=#]').on('click', () => {
+    var speed = 500;
+    var href=$(this).attr('href');
+    var target = $(href=="#" || href == "" ? 'html' : href);
+    var position = target.offset().top;
+    $('html, body').animate({scrollTop:position}, speed, 'swing');
+    return false;
+  }); 
   
   <title>Home</title>
   <link rel="stylesheet" href="CSS/main.css">
@@ -231,7 +241,7 @@
                 </div>
                 <div class="sub-contents d-flex justify-content-between">
                   <div id="public-button" class="parent-button">
-                    <a href="Real_Time_Chat.html" class="sub-contents-button">
+                    <a href="chat.html" class="sub-contents-button">
                         Public Channelの一覧にいく
                     </a>
                   </div>

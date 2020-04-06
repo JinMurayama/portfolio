@@ -30,6 +30,7 @@ firebase
     console.error('ユーザ作成に失敗:', error);
   });
 */
+
 // プロフィール画像を設定していないユーザのデフォルト画像
 const defaultProfileImageURL = 'image/default-profile-image.png';
 
@@ -63,10 +64,6 @@ const formatDate = (date) => {
  * --------------------
  */
 
-// settingsModalを初期状態に戻す
-const resetSettingsModal = () => {
-  $('#settings-form')[0].reset();
-};
 
 // ニックネーム表示を更新する
 const updateNicknameDisplay = (uid) => {
@@ -532,7 +529,7 @@ const loadChatView = () => {
     dbdata.rooms = roomsSnapshot.val();
 
     // 初期ルームが存在しない場合は作成する
-    if (dbdata.rooms === null || !dbdata.rooms[defaultRoomName]) {
+    if (dbdata.rochatoms === null || !dbdata.rooms[defaultRoomName]) {
       console.log(`${defaultRoomName}ルームを作成します`);
       firebase
         .database()
@@ -680,9 +677,8 @@ const onLogout = () => {
   dbdata = {};
   resetLoginForm();
   resetChatView();
-  resetSettingsModal();
   resetFavoritesListModal(); // お気に入り一覧のモーダルを初期化
-  showView('login');
+  showView('chat');
 };
 
 // ユーザ作成のときパスワードが弱すぎる場合に呼ばれる
@@ -731,7 +727,7 @@ const onOtherLoginError = () => {
 
 /**
  * ---------------------------------------
- * 以下、コールバックやイベントハンドラの登録と、
+ * 以下、コールバックやイベントハン���ラの登録と、
  * ページ読み込みが完了したタイミングで行うDOM操作
  * ---------------------------------------
  */
@@ -774,7 +770,7 @@ const catchErrorOnSignIn = (error) => {
 // ログイン状態の変化を監視する
 firebase.auth().onAuthStateChanged((user) => {
   // ログイン状態が変化した
-
+/*
   if (user) {
     // ログイン済
     currentUID = user.uid;
@@ -783,6 +779,22 @@ firebase.auth().onAuthStateChanged((user) => {
     // 未ログイン
     currentUID = null;
     onLogout();
+  }
+  */
+  if (user) {
+    currentUID = user.uid;
+    onLogin();
+    console.log('ログインしました');
+  } else {
+    console.log('ログインしていません');
+
+    firebase
+      .auth()
+      .signInAnonymously() // 匿名ログインの実行
+      .catch((error) => {
+        // ログインに失敗したときの処理
+        console.error('ログインエラー', error);
+      });
   }
 });
 
@@ -830,7 +842,7 @@ $('#login-form').on('submit', (e) => {
 $('#logout__link').on('click', (e) => {
   e.preventDefault();
 
-  // ハンバーガーメニューが開いている場合は閉じる
+  // ハンバーガーメニューが開いている場���は閉じる
   $('#navbarSupportedContent').collapse('hide');
 
   firebase
@@ -965,13 +977,11 @@ $('#new-channel-form').on('submit', (e) => {
  */
 
 // ルーム削除ボタンクリックでルームを削除する
-$('.room-delete-button').on('click', (e) => {
-  console.log($(e.target).value);
-  const delete_id = $(e.target).parent().attr('id');
-  currentRoomName = delete_id;
+$(document).on('click','.room-delete-button', (e) => {
+  const delete_id =  $(e.target).parent('div').attr('id');
 
   console.log(delete_id);
-  deleteRoom(currentRoomName);
+  deleteRoom(delete_id);
   $(`#${delete_id}`).remove();
 });
 
