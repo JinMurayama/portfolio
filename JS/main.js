@@ -1,4 +1,18 @@
-
+//モーダルウィンドウの表示
+new Vue({
+  el: "#new_private_channel",
+  data: {
+    showContent: false
+  },
+  methods:{
+    openModal: function(){
+      this.showContent = true
+    },
+    closeModal: function(){
+      this.showContent = false
+    }
+  }
+});
 
 $('.animated').waypoint({
   handler(direction){

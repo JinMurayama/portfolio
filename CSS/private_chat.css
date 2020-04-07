@@ -71,6 +71,9 @@
 #channel-contents{
   border: 1px solid black;
   margin-left: 13px;
+  height: auto;
+  max-height: 630px;
+  overflow: auto;
 }
 
 #content{
@@ -103,10 +106,6 @@
   }
 }
 
-#chat {
-  padding-top: 54px;
-}
-
 .message-template,
 .favorite-template {
   display: none;
@@ -114,7 +113,10 @@
 
 #message-list {
   max-width: 650px;
-  min-height: calc(100vh - 51px - 46px + 6px);
+  min-height: 480px;
+  max-height: 480px;
+  overflow: auto;
+ /* min-height: calc(100vh - 51px - 46px + 6px);*/
   margin: 0 auto 40px auto;
   padding: 10px 10px 6px 10px;
   border-width: 0 1px;
@@ -189,6 +191,8 @@
 
 .input-group{
   z-index: 0;
+  width: 100%;
+  display: block!important;
 }
 
 /* 三角形の耳 */
@@ -222,7 +226,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -271,4 +275,32 @@
   width:100%;
   display: table-cell;
   vertical-align: middle;
+}
+
+.input-group{
+
+}
+
+#form-name{
+  width: auto;
+  max-width: 100px;
+}
+
+#form-comment{
+  width: auto;
+  max-width: 400px;
+}
+
+#comment-form__text{
+  min-height: 45px;
+  padding: 10px 9px;
+}
+
+#chat{
+  width: auto;
+  min-width: 800px;
+}
+
+#create-room__help{
+  color:red;
 }

@@ -12,7 +12,7 @@
   
   <title>Real_Time_Chat</title>
   <link rel="stylesheet" href="CSS/main.css">
-  <link rel="stylesheet" href="CSS/chat.css">
+  <link rel="stylesheet" href="CSS/private_chat.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -30,16 +30,10 @@
     <div class="message-template">
     <!-- 受信メッセージのテンプレート -->
     <div class="message message--received">
-      <div class="message__profile">
-        <img class="message__user-image" src="img/default-profile-image.png" width="46" height="46" alt="プロフィール画像">
-      </div>
       <div class="message__body">
         <div class="message__user-name"></div>
         <div class="message__text"></div>
         <div class="message__info">
-          <a href="#" class="message__favorite-link">
-            <i class="message__favorite-icon fa fa-star-o"></i>
-          </a>
           <span class="message__time"></span>
         </div>
       </div>
@@ -48,17 +42,10 @@
 
     <!-- 送信メッセージのテンプレート -->
     <div class="message message--sent">
-      <div class="message__profile">
-        <a href="#settingsModal" data-toggle="modal"><img class="message__user-image"
-            src="img/default-profile-image.png" width="46" height="46" alt="プロフィール画像"></a>
-      </div>
       <div class="message__body">
         <div class="message__user-name"></div>
         <div class="message__text"></div>
         <div class="message__info">
-          <a href="#" class="message__favorite-link">
-            <i class="message__favorite-icon fa fa-star-o"></i>
-          </a>
           <span class="message__time"></span>
         </div>
       </div>
@@ -135,10 +122,10 @@
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-between" id="chat-contents">
+  <div class="d-flex" id="chat-contents">
     <div class="d-flex flex-column"id="side-bar">
       <div id="function-contents">
-        <div id="new_channel">
+        <div id="new_public_channel">
           <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
             <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
           </button>
@@ -150,6 +137,7 @@
                 <input id="room-name" type="text">
                 <button class="btn btn-primary" type="submit">新規作成</button>
               </form>
+              <p id="create-room__help" ></p>
               <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
             </div>
           </div>
@@ -166,36 +154,49 @@
             </button>
           </div>
         </div>  !-->
-        <div id="channel-serach" class="d-flex justify-content-between">
-          <input id="search-input" class="form-control" type="text" placeholder="Search" v-model="search_term">
-           <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
-            Search
-          </button>
-        </div>
-        <div id="channel-contents">
-          <div id="col-contents">
-            <p class="channel-title">Public Channel一覧</p>
+        <div id="app">
+          <div id="channel-serach" class="d-flex justify-content-between">
+            <input v-model="keyword" id="search-input" class="form-control" type="text" placeholder="Search">
+           <!--  <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
+              Search
+            </button> !-->
           </div>
-          <div id="channel-list">
-            
+          <div id="channel-contents">
+            <div id="col-contents">
+              <p class="channel-title">Public Channel一覧</p>
+            </div>
+            <div id="channel-list">
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="message-bord">
+    <div id="channel-title"></div>
+    <section id="chat" class="view">
+      
+      <!-- メッセージ表示部 -->
+      <div id="message-list" class="clearfix"></div>
+      
          <!-- メッセージ投稿フォーム -->
       <form id="comment-form">
         <div class="input-group">
-          <input id="comment-form__text" type="text" class="form-control">
-          <span class="input-group-append">
-            <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
-              <i class="fa fa-paper-plane" aria-hidden="true"></i>
-            </button>
-          </span>
+          <div id="form-name">
+            <label>name</label>
+            <input id="name-form__text" type="text" class="form-control">
+          </div>
+          <div id="form-comment">
+            <label>message</label>
+            <textarea id="comment-form__text" rows="1" class="form-control"></textarea>
+            <span class="input-group-append">
+              <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </span>
+          </div>
         </div>
         <!-- /.input-group -->
       </form>
-    </div>
+    </section>
   </div>
 </section>
 
@@ -243,7 +244,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
   </script>
   
-   <script src="JS/chat.js"></script>
+  <!-- 外部ライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  
+  
+   <script src="JS/private_chat.js"></script>
   
 </body>
 </html>

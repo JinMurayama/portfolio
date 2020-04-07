@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- Site made with Mobirise Website Builder v4.12.3, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.12.3, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
+  <meta name="description" content="Web Site Builder Description">
+  
+  
+  <title>Real_Time_Chat</title>
+  <link rel="stylesheet" href="CSS/main.css">
+  <link rel="stylesheet" href="CSS/public_chat.css">
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  
+  
+  
+</head>
+<body>
+    <div class="message-template">
+    <!-- 受信メッセージのテンプレート -->
+    <div class="message message--received">
+      <div class="message__body">
+        <div class="message__user-name"></div>
+        <div class="message__text"></div>
+        <div class="message__info">
+          <span class="message__time"></span>
+        </div>
+      </div>
+    </div>
+    <!-- /.message -->
+
+    <!-- 送信メッセージのテンプレート -->
+    <div class="message message--sent">
+      <div class="message__body">
+        <div class="message__user-name"></div>
+        <div class="message__text"></div>
+        <div class="message__info">
+          <span class="message__time"></span>
+        </div>
+      </div>
+    </div>
+    <!-- /.message -->
+  </div>
+  
+<section class="menu cid-rUIyjIuUbM" once="menu" id="menu1-1">
+    <nav id="chat-navbar" class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a href="index.html">
+                         <img src="image/logo.png" id = "logo" alt="jin_portfolio" >
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                      about
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                        service
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                        chat
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                        map
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                        webhock
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="index.html">
+                        mashup
+                    </a>
+                </li>
+            </ul>
+            <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-success display-4" href="contact_form.html">
+                    <i class="fab fa-wpforms mr-2 glyphicon"></i>contactform
+                </a></div>
+        </div>
+    </nav>
+</section>
+
+<section class="mbr-section cid-rUIzGN1Nle" id="main-contents">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="title col-12 col-lg-12">
+        <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">
+          Real Time Chat
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex" id="chat-contents">
+    <div class="d-flex flex-column"id="side-bar">
+      <div id="function-contents">
+        <div id="new_public_channel">
+          <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
+            <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
+          </button>
+          <div id="overlay" v-show="showContent">
+            <div id="content">
+              <p>Public Channelを新規で作成いたします。</p>
+              <form id = "new-channel-form">
+                <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
+                <input id="room-name" type="text">
+                <button class="btn btn-primary" type="submit">新規作成</button>
+              </form>
+              <p id="create-room__help" ></p>
+              <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
+            </div>
+          </div>
+        </div>
+<!--        <div class="d-flex"id="leave-lock">
+          <div id="leave">
+            <button type="button" class="btn btn-light bt-contents">
+              <i class="fas fa-sign-out-alt icon-function"></i>Leave 
+            </button>
+          </div>
+          <div id="lock">
+            <button type="button" class="btn btn-light bt-contents">
+              <i class="fas fa-lock icon-function"></i>Lock
+            </button>
+          </div>
+        </div>  !-->
+        <div id="app">
+          <div id="channel-serach" class="d-flex justify-content-between">
+            <input v-model="keyword" id="search-input" class="form-control" type="text" placeholder="Search">
+           <!--  <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
+              Search
+            </button> !-->
+          </div>
+          <div id="channel-contents">
+            <div id="col-contents">
+              <p class="channel-title">Public Channel一覧</p>
+            </div>
+            <div id="channel-list">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="channel-title"></div>
+    <section id="chat" class="view">
+      
+      <!-- メッセージ表示部 -->
+      <div id="message-list" class="clearfix"></div>
+      
+         <!-- メッセージ投稿フォーム -->
+      <form id="comment-form">
+        <div class="input-group">
+          <div id="form-name">
+            <label>name</label>
+            <input id="name-form__text" type="text" class="form-control">
+          </div>
+          <div id="form-comment">
+            <label>message</label>
+            <textarea id="comment-form__text" rows="1" class="form-control"></textarea>
+            <span class="input-group-append">
+              <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+        <!-- /.input-group -->
+      </form>
+    </section>
+  </div>
+</section>
+
+
+
+
+  <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/dropdown/js/nav-dropdown.js"></script>
+  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  <script src="assets/formoid/formoid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+ 
+  
+    <!-- Firebaseのセットアップコード（下記のSDKのバージョンは6.2.0） -->
+  <!-- The core Firebase JS SDK is always required and must be listed first
+    (中心となるFirebase SDKです。常に必要で、最初に記述する必要があります) -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  
+  <!--    (使いたいFirebaseサービス用のSDKを加えます) -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+  
+  <script>
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCrdY7A95r-MhAdFsYVnyre_DzA3hRPt0Q",
+  authDomain: "realtime-chat-cc9e6.firebaseapp.com",
+  databaseURL: "https://realtime-chat-cc9e6.firebaseio.com",
+  projectId: "realtime-chat-cc9e6",
+  storageBucket: "realtime-chat-cc9e6.appspot.com",
+  messagingSenderId: "1329570003",
+  appId: "1:1329570003:web:81ff89df0d07c37016f426",
+  measurementId: "G-Q6G84HKXHH"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+  </script>
+  
+  <!-- 外部ライブラリ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  
+  
+  <script src="JS/public_chat.js"></script>
+  
+</body>
+</html>

@@ -3,7 +3,7 @@
 
 //モーダルウィンドウの表示
 new Vue({
-  el: "#new_channel",
+  el: "#new_public_channel",
   data: {
     showContent: false
   },
@@ -16,6 +16,26 @@ new Vue({
     }
   }
 });
+
+//検索機能の実装
+/*
+new Vue({
+  el:"#app",
+  data:{
+    keyword: "",
+    rooms: [
+      {
+        
+      }]
+  },
+  computed:{
+    
+    for(var i in this.rooms){
+      
+    }
+  }
+})
+*/
 /*
 const email = 'user1@example.com'; // ログインに使うメールアドレス
 const password = 'password1'; // 設定するパスワード
@@ -163,48 +183,6 @@ const addFavoriteMessage = (messageId, message) => {
   divTag.appendTo('#favorite-list');
 };
 
-// Realtime Database の favorites に追加する or favorites から削除する
-const toggleFavorite = (e) => {
-  const { messageId, message } = e.data;
-
-  e.preventDefault();
-
-  // favorites にデータが存在しているか
-  if (dbdata.favorites && dbdata.favorites[messageId]) {
-    // TODO: favorites から該当のお気に入り情報を削除
-    const favoriteDlRef = firebase.database().ref(`favorites/${currentUID}/${messageId}`);
-  
-    favoriteDlRef.remove()
-      .then( () => {
-        console.log("お気に入りから削除しました");
-      })
-      .catch( (error) => {
-        console.error('お気に入りから削除しました', error);
-      });
-      
-    console.log(currentUID);
-  } else {
-    // TODO: favorites に該当のメッセージをお気に入りとして追加
-    const favoriteRef = firebase.database().ref(`favorites/${currentUID}/${messageId}`);
-    favoriteRef.set({
-      createdAt: firebase.database.ServerValue.TIMESTAMP,
-      message: message,
-    })
-      .then( () => {
-        console.log(`messageId, ${messageId}`);
-        console.log('お気に入りに追加しました');
-      }) 
-      .catch( (error) => {
-        console.error(`お気に入りに追加できませんでした`, error);
-      })
-  }
-};
-
-// お気に入り一覧のモーダルを初期化
-const resetFavoritesListModal = () => {
-  $('#favorite-list').empty();
-};
-
 /**
  * -------------------
  * チャット画面関連の関数
@@ -226,20 +204,18 @@ const createMessageDiv = (messageId, message) => {
   const user = dbdata.users[message.uid];
 
   // ユーザが存在する場合
-  if (user) {
-    // 投稿者ニックネーム
-    divTag
-      .find('.message__user-name')
-      .addClass(`nickname-${message.uid}`)
-      .text(user.nickname);
-    // 投稿者プロフィール画像
-    divTag.find('.message__user-image').addClass(`profile-image-${message.uid}`);
-    if (user.profileImageURL) {
-      // プロフィール画像のURLを取得済みの場合
-      divTag.find('.message__user-image').attr({
-        src: user.profileImageURL,
-      });
-    }
+  // 投稿者ニックネーム
+  divTag
+    .find('.message__user-name')
+    .addClass(`nickname-${message.uid}`)
+    .text(message.name);
+  // 投稿者プロフィール画像
+  divTag.find('.message__user-image').addClass(`profile-image-${message.uid}`);
+  if (user.profileImageURL) {
+    // プロフィール画像のURLを取得済みの場合
+    divTag.find('.message__user-image').attr({
+      src: user.profileImageURL,
+    });
   }
   // メッセージ本文
   divTag.find('.message__text').text(message.text);
@@ -249,33 +225,6 @@ const createMessageDiv = (messageId, message) => {
   // id属性をセット
   divTag.attr('id', `message-id-${messageId}`);
 
-  // お気に入りボタンのイベントハンドラを登録
-  const mfl = divTag.find('.message__favorite-link');
-  mfl.on(
-    'click',
-    {
-      messageId,
-      message,
-    },
-    toggleFavorite,
-  );
-
-  // TODO: お気に入りONのとき、お気に入りリンクのアイコンを 塗りつぶしあり(fa-star) に設定する
-  const favorite_ref = firebase
-    .database()
-    .ref(`favorites/${currentUID}/${messageId}`);
-  
-  let favorite_value
-  
-  favorite_ref.on('value', (snapshot) => {
-    favorite_value = snapshot.val();
-  });
-  
-  if(favorite_value != null){ 
-    console.log(divTag);
-    divTag.find(`.message__body .message__info i`).removeClass('fa-star-o');
-    divTag.find(`.message__body .message__info i`).addClass('fa-star');
-  }
   return divTag;
 };
 
@@ -353,13 +302,6 @@ const resetChatView = () => {
   // メッセージ一覧を消去
   clearMessages();
 
-  // ナビゲーションバーの情報を消去
-  clearNavbar();
-
-  // ユーザ情報設定モーダルのプレビュー画像を消去
-  $('#settings-profile-image-preview').attr({
-    src: defaultProfileImageURL,
-  });
 };
 
 /**
@@ -377,6 +319,8 @@ const showRoom = (roomName) => {
     return;
   }
   currentRoomName = roomName;
+  $("#channel-title").text(currentRoomName);
+
   clearMessages();
 
   // ルームのメッセージ一覧をダウンロードし、かつメッセージの追加を監視
@@ -388,6 +332,7 @@ const showRoom = (roomName) => {
   // イベントハンドラを登録
   roomRef.on('child_added', (childSnapshot) => {
     if (roomName === currentRoomName) {
+      
       // 追加されたメッセージを表示
       addMessage(childSnapshot.key, childSnapshot.val());
     }
@@ -441,17 +386,9 @@ const setMessageListMinHeight = () => {
     // - 51 (ナビゲーションバーの高さ)
     // - 46 (投稿フォームの高さ)
     // + 6 (投稿フォームのborder-radius)
-    'min-height': `${$(window).height() - 51 - 46 + 6}px`,
+  //  'min-height': `${$(window).height() - 51 - 46 + 6}px`,
   });
 };
-
-// ルーム作成モーダルの内容をリセットする
-const resetCreateRoomModal = () => {
-  $('#create-room-form')[0].reset();
-  $('#create-room__room-name').removeClass('has-error');
-  $('#create-room__help').hide();
-};
-
 /**
  * ルームを削除する
  * なおルームが削除されると roomsRef.on("value", ...); のコールバックが実行され、初期ルームに移動する
@@ -546,7 +483,7 @@ const loadChatView = () => {
       return;
     }
 
-    // ルーム一覧をナビゲーションメニューに表示
+    // ルーム一覧を表示
     showRoomList(roomsSnapshot);
 
     // usersデータがまだ来ていない場合は何もしない
@@ -555,72 +492,6 @@ const loadChatView = () => {
     }
 
     showCurrentRoom();
-  });
-
-  // お気に入りデータを取得
-  const favoritesRef = firebase
-    .database()
-    .ref(`favorites/${currentUID}`)
-    .orderByChild('createdAt');
-
-  // 過去に登録したイベントハンドラを削除
-  favoritesRef.off('child_removed');
-  favoritesRef.off('child_added');
-
-  /**
-   * favorites の child_removedイベントハンドラを登録
-   * （お気に入りが削除されたときの処理）
-   */
-  favoritesRef.on('child_removed', (favSnapshot) => {
-    const messageId = favSnapshot.key;
-
-    // お気に入りが削除されていたら何もしない
-    if (!dbdata.favorites) {
-      return;
-    }
-
-    // TODO: 該当するデータをdbdata.favoritesから削除する
-
-    if(dbdata.favorites[messageId]){
-      dbdata.favorites={};
-      console.log(dbdata.favorites[messageId]);
-    }
-    // お気に入り一覧モーダルから該当のお気に入り情報を削除する
-    $(`#favorite-message-id-${messageId}`).remove();
-
-    // TODO: お気に入りリンクのアイコンを、塗りつぶしなし(fa-star-o) に変更する
-    const messageI=$(`#message-id-${messageId} .message__body i`);
-    messageI.removeClass('fa-star');
-    messageI.addClass('fa-star-o');
-    
-  });
-
-  /**
-   * favorites の child_addedイベントハンドラを登録
-   *（お気に入りが追加されたときの処理）
-   */
-  favoritesRef.on('child_added', (favSnapshot) => {
-    const messageId = favSnapshot.key;
-    const favorite = favSnapshot.val();
-
-    if (!dbdata.favorites) {
-      // データを初期化する
-      dbdata.favorites = {};
-    }
-
-    // TODO: dbdata.favoritesに登録する
-    if(!dbdata.favorites[messageId]){
-      dbdata.favorites[messageId]=favorite;
-      console.log(dbdata.favorites[messageId]);
-    }
-
-    // お気に入り一覧モーダルを更新する
-    addFavoriteMessage(messageId, favorite.message);
-
-    // TODO: お気に入りリンクのアイコンを、塗りつぶしあり(fa-star) に変更する
-    let messageI=$(`#message-id-${messageId} .message__body i`);
-    messageI.removeClass('fa-star-o');
-    messageI.addClass('fa-star'); 
   });
 };
 
@@ -677,7 +548,6 @@ const onLogout = () => {
   dbdata = {};
   resetLoginForm();
   resetChatView();
-  resetFavoritesListModal(); // お気に入り一覧のモーダルを初期化
   showView('chat');
 };
 
@@ -838,25 +708,6 @@ $('#login-form').on('submit', (e) => {
     });
 });
 
-// ログアウトがクリックされたらログアウトする
-$('#logout__link').on('click', (e) => {
-  e.preventDefault();
-
-  // ハンバーガーメニューが開いている場���は閉じる
-  $('#navbarSupportedContent').collapse('hide');
-
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      // ログアウト成功
-      window.location.hash = '';
-    })
-    .catch((error) => {
-      console.error('ログアウトに失敗:', error);
-    });
-});
-
 /**
  * --------------
  * チャット画面関連
@@ -867,15 +718,23 @@ $('#comment-form').on('submit', (e) => {
   const commentForm = $('#comment-form__text');
   const comment = commentForm.val();
 
+  const nameForm=$('#name-form__text');
+  let name = nameForm.val();
+  
   e.preventDefault();
 
   if (comment === '') {
     return;
   }
   commentForm.val('');
+  
+  if(name === ''){
+    name = "匿名";
+  }
 
   // メッセージを投稿する
   const message = {
+    name: name,
     uid: currentUID,
     text: comment,
     time: firebase.database.ServerValue.TIMESTAMP,
@@ -895,22 +754,7 @@ setMessageListMinHeight();
  * ------------
  */
 
-$('#createRoomModal').on('show.bs.modal', () => {
-  // #createRoomModalが表示される直前に実行する処理
-
-  // モーダルの内容をリセット
-  resetCreateRoomModal();
-});
-$('#createRoomModal').on('shown.bs.modal', () => {
-  // #createRoomModalが表示された直後に実行する処理
-
-  // ハンバーガーメニューが開いている場合は閉じる
-  $('#navbarSupportedContent').collapse('hide');
-
-  // ルーム名の欄にすぐ入力できる状態にする
-  $('#room-name').trigger('focus');
-});
-
+  
 // ルーム作成フォームが送信されたらルームを作成
 $('#new-channel-form').on('submit', (e) => {
   const roomName = $('#room-name')
