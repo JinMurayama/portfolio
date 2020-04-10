@@ -41,9 +41,6 @@ new Vue({
 // プロフィール画像を設定していないユーザのデフォルト画像
 const defaultProfileImageURL = 'image/default-profile-image.png';
 
-// 初期ルーム名
-const defaultRoomName = 'default';
-
 // 現在表示しているルーム名
 let currentRoomName = null;
 
@@ -268,14 +265,6 @@ const showRoomList = (roomsSnapshot) => {
     }).text("参加");
     $('#channel-list').find(`#${roomName}`).append(room_join);
     
-    if (roomName !== defaultRoomName) {
-      const room_delete = $('<button>', {
-        class: 'btn btn-danger room-delete-button',
-        type: 'button'
-      }).text("削除")
-      
-      $('#channel-list').find(`#${roomName}`).append(room_delete);
-    }
   });
 };
 
@@ -328,12 +317,6 @@ const showRoom = (roomName) => {
   // ナビゲーションバーのルーム表示を更新
   $('.room-list-menu').text(`ルーム: ${roomName}`);
 
-  // 初期ルームの場合はルーム削除メニューを無効にする
-  if (roomName === defaultRoomName) {
-    $('#delete-room-menuitem').addClass('disabled');
-  } else {
-    $('#delete-room-menuitem').removeClass('disabled');
-  }
 
   // ナビゲーションのドロップダウンメニューで現在のルームをハイライトする
   $('#room-list > a').removeClass('active');
@@ -345,26 +328,10 @@ const showCurrentRoom = () => {
   if (currentRoomName) {
     if (!dbdata.rooms[currentRoomName]) {
       // 現在いるルームが削除されたため初期ルームに移動
-      changeLocationHash(defaultRoomName);
     }
   } else {
     // ページロード直後の場合
     const { hash } = window.location;
-    /*
-    if (hash) {
-      // URLの#以降がある場合はそのルームを表示
-      const roomName = decodeURIComponent(hash.substring(1));
-      if (dbdata.rooms[roomName]) {
-        showRoom(roomName);
-      } else {
-        // ルームが存在しないので初期ルームを表示
-        changeLocationHash(defaultRoomName);
-      }
-    } else {
-      // #指定がないので初期ルームを表示
-      changeLocationHash(defaultRoomName);
-    }
-    */
   }
 };
 
@@ -454,24 +421,6 @@ const loadChatView = () => {
 
     dbdata.rooms = roomsSnapshot.val();
 
-    // 初期ルームが存在しない場合は作成する
-    /* if (dbdata.rochatoms === null || !dbdata.rooms[defaultRoomName]) {
-      console.log(`${defaultRoomName}ルームを作成します`);
-      firebase
-        .database()
-        .ref(`rooms/${defaultRoomName}`)
-        .setWithPriority(
-          {
-            createdAt: firebase.database.ServerValue.TIMESTAMP,
-            createdByUID: currentUID,
-          },
-          1,
-        );
-
-      // このコールバック関数が再度呼ばれるのでこれ以上は処理しない
-      return;
-    }
-*/
     // ルーム一覧を表示
     showRoomList(roomsSnapshot);
 
