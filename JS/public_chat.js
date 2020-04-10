@@ -10,6 +10,7 @@ new Vue({
   methods:{
     openModal: function(){
       this.showContent = true
+      
     },
     closeModal: function(){
       this.showContent = false
@@ -35,20 +36,6 @@ new Vue({
     }
   }
 })
-*/
-/*
-const email = 'user1@example.com'; // ログインに使うメールアドレス
-const password = 'password1'; // 設定するパスワード
-
-firebase
-  .auth()
-  .createUserWithEmailAndPassword(email, password)
-  .then(() => {
-    console.log('ユーザ作成に成功');
-  })
-  .catch((error) => {
-    console.error('ユーザ作成に失敗:', error);
-  });
 */
 
 // プロフィール画像を設定していないユーザのデフォルト画像

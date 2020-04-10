@@ -10,6 +10,7 @@ new Vue({
   methods:{
     openModal: function(){
       this.showContent = true
+      
     },
     closeModal: function(){
       this.showContent = false
@@ -35,20 +36,6 @@ new Vue({
     }
   }
 })
-*/
-/*
-const email = 'user1@example.com'; // ログインに使うメールアドレス
-const password = 'password1'; // 設定するパスワード
-
-firebase
-  .auth()
-  .createUserWithEmailAndPassword(email, password)
-  .then(() => {
-    console.log('ユーザ作成に成功');
-  })
-  .catch((error) => {
-    console.error('ユーザ作成に失敗:', error);
-  });
 */
 
 // プロフィール画像を設定していないユーザのデフォルト画像
@@ -363,6 +350,7 @@ const showCurrentRoom = () => {
   } else {
     // ページロード直後の場合
     const { hash } = window.location;
+    /*
     if (hash) {
       // URLの#以降がある場合はそのルームを表示
       const roomName = decodeURIComponent(hash.substring(1));
@@ -376,6 +364,7 @@ const showCurrentRoom = () => {
       // #指定がないので初期ルームを表示
       changeLocationHash(defaultRoomName);
     }
+    */
   }
 };
 
@@ -466,7 +455,7 @@ const loadChatView = () => {
     dbdata.rooms = roomsSnapshot.val();
 
     // 初期ルームが存在しない場合は作成する
-    if (dbdata.rochatoms === null || !dbdata.rooms[defaultRoomName]) {
+    /* if (dbdata.rochatoms === null || !dbdata.rooms[defaultRoomName]) {
       console.log(`${defaultRoomName}ルームを作成します`);
       firebase
         .database()
@@ -482,7 +471,7 @@ const loadChatView = () => {
       // このコールバック関数が再度呼ばれるのでこれ以上は処理しない
       return;
     }
-
+*/
     // ルーム一覧を表示
     showRoomList(roomsSnapshot);
 

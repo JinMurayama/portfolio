@@ -72,43 +72,6 @@
                 </span>
             </div>
         </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                      about
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                        service
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                        chat
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                        map
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                        webhock
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="index.html">
-                        mashup
-                    </a>
-                </li>
-            </ul>
-            <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-success display-4" href="contact_form.html">
-                    <i class="fab fa-wpforms mr-2 glyphicon"></i>contactform
-                </a></div>
-        </div>
     </nav>
 </section>
 
@@ -116,8 +79,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="title col-12 col-lg-12">
-        <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">
-          Real Time Chat
+        <h2 id="private_channle_title"class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">
+          {{channel_title}} Channel
         </h2>
       </div>
     </div>
@@ -129,7 +92,7 @@
           <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
             <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
           </button>
-          <div id="overlay" v-show="showContent">
+          <div id="overlay1" v-show="showContent">
             <div id="content">
               <p>Public Channelを新規で作成いたします。</p>
               <form id = "new-channel-form">

@@ -11,14 +11,17 @@
   
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   
-    $('a[href^=#]').on('click', () => {
-    var speed = 500;
-    var href=$(this).attr('href');
-    var target = $(href=="#" || href == "" ? 'html' : href);
-    var position = target.offset().top;
-    $('html, body').animate({scrollTop:position}, speed, 'swing');
-    return false;
-  }); 
+  <script>
+$('a[href^=#]').on('click', () => {
+  var speed = 500;
+  var href=$(this).attr('href');
+  var target = $(href=="#" || href == "" ? 'html' : href);
+  var position = target.offset().top;
+  $('html, body').animate({scrollTop:position}, speed, 'swing');
+  return false;
+}); 
+  
+  </script>
   
   <title>Home</title>
   <link rel="stylesheet" href="CSS/main.css">
@@ -241,14 +244,35 @@
                 </div>
                 <div class="sub-contents d-flex justify-content-between">
                   <div id="public-button" class="parent-button">
-                    <a href="public_chat.html" class="sub-contents-button">
-                        Public Channelの一覧にいく
-                    </a>
+                    <button onclick="location.href='public_chat.html'" type="button" class="btn btn-primary bt-contents">
+                      Public Channelの一覧
+                    </button>                  
                   </div>
                   <div id="private-button" class="parent-button">
-                    <a href="private_chat.html" class="sub-contents-button">
-                        Private Channelを作成する
-                    </a>
+                    <div id="new_private_channel">
+                      <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
+                        Private Cnannelを作成
+                      </button>
+                      <div id="overlay" v-show="showContent">
+                        <div id="private-content">
+                          <p>Private Channelを新規で作成いたします。</p>
+                          <form id = "new-channel-form">
+                            <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
+                     
+                            <input id="room-name" v-model="InputForm" type="text">
+                            <button v-on:click="active" class="btn btn-primary" type="submit">新規作成</button>
+                          </form>
+                          <p id="create-room__help" ></p>
+                          <p id="create-room__success" ></p>
+                          <div id="main-button">
+                            <button id="close-button" class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
+                            <div v-if="isActive" id="button-contents">
+                              <buttoncontents></buttoncontents>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -275,10 +299,11 @@
                             </h4>
                             <p class="mbr-step-text mbr-fonts-style display-7">
                               <h5>・Public Channelの一覧にいく</h5>slackと2チャンネルをイメージしました。
-                              自身でチャンネルを作成し、匿名的にすぐやりとりをすることができます。
-                              検索機能はまだ準備中です。
-                              <h5>・Pribate Channelを作成する</h5>privateチャンネルを作成し、
-                              URLを共有した方のみでチャットをすることができます。
+                              自身でチャンネルを作成し、匿名的にすぐやりとりをすることができます。</br>
+                              ※検索機能はまだ準備中です。
+                              <h5>・Private Channelを作成する</h5>privateチャンネルを作成し、
+                              URLを共有した方のみでチャットをすることができます。</br>
+                              ※private_chat画面は作成中です。
                             </p>
                         </div>
                     </div>
@@ -565,5 +590,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="JS/main.js"></script>
+  
+      <!-- Firebaseのセットアップコード（下記のSDKのバージョンは6.2.0） -->
+  <!-- The core Firebase JS SDK is always required and must be listed first
+    (中心となるFirebase SDKです。常に必要で、最初に記述する必要があります) -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  
+  <!--    (使いたいFirebaseサービス用のSDKを加えます) -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <script>
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCrdY7A95r-MhAdFsYVnyre_DzA3hRPt0Q",
+  authDomain: "realtime-chat-cc9e6.firebaseapp.com",
+  databaseURL: "https://realtime-chat-cc9e6.firebaseio.com",
+  projectId: "realtime-chat-cc9e6",
+  storageBucket: "realtime-chat-cc9e6.appspot.com",
+  messagingSenderId: "1329570003",
+  appId: "1:1329570003:web:81ff89df0d07c37016f426",
+  measurementId: "G-Q6G84HKXHH"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="JS/private_create.js"></script>
+  <script type="text/javascript" src="JS/jquery.qrcode.min.js"></script>
+
 </body>
+
+
 </html>

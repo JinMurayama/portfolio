@@ -1,3 +1,10 @@
+body.fixed {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
 #header1-0{
   background-image: url(../image/header.jpg)
 }
@@ -8,11 +15,15 @@
 
   /*　画面全体を覆う設定　*/
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color:rgba(0,0,0,0.5);
+  top:30%;
+  left:27%;
+  bottom: 0;
+  right: 0;
+  width:40%;
+  height:55%;
+  background-color: #fff;
+  border: 2px solid black;
+  border-radius: 20px;
 
   /*　画面の中央に要素を表示させる設定　*/
   display: flex;
@@ -46,3 +57,46 @@
   margin-right: 5px;
 }
 
+#create-room__help{
+  color:red;
+}
+
+#create-room__success{
+  color:green;
+}
+
+#button-contents{
+  position: relative;
+  display: inline-block;
+  left: 75px;
+}
+
+#qrcode{
+  text-align: center;
+}
+
+#close-button{
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: 0;
+}
+
+#main-button{
+  position: relative;
+}
+
+#urlshare{
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+canvas{
+  position:relative;
+  left: -35px;
+  margin-top: 10px;
+}
+
+#url_input{
+  width: 50%;
+}
