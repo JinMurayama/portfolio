@@ -18,25 +18,7 @@ new Vue({
   }
 });
 
-//検索機能の実装
-/*
-new Vue({
-  el:"#app",
-  data:{
-    keyword: "",
-    rooms: [
-      {
-        
-      }]
-  },
-  computed:{
-    
-    for(var i in this.rooms){
-      
-    }
-  }
-})
-*/
+
 
 // プロフィール画像を設定していないユーザのデフォルト画像
 const defaultProfileImageURL = 'image/default-profile-image.png';
@@ -44,11 +26,39 @@ const defaultProfileImageURL = 'image/default-profile-image.png';
 // 現在表示しているルーム名
 let currentRoomName = null;
 
+//private channelのid
+let private_id="";
+
 // 現在ログインしているユーザID
 let currentUID;
 
 // Firebaseから取得したデータを一時保存しておくための変数
 let dbdata = {};
+
+new Vue({
+  el:'#private_channel_title',
+  data:{
+    title:'',
+  },
+  created(){
+    let url_title = this.title;
+    setTimeout(() => {  
+      const url_room = location.href;
+      const url = url_room.split("#");
+      private_id = url[1];
+      firebase
+        .database()
+        .ref(`private_rooms/${private_id}`)
+        .on("value", (snapshot) => {
+          currentRoomName=snapshot.child("createdByRoomName").val();      
+          $("#private_channel_title").text(`${currentRoomName}チャンネル`);
+
+        });
+      url_title = currentRoomName;
+      showRoom(private_id);
+    }, 1000)
+  },
+});
 
 /**
  * ----------------------
@@ -221,53 +231,6 @@ const addMessage = (messageId, message) => {
   $('html, body').scrollTop($(document).height());
 };
 
-// 動的に追加されたルームを一旦削除する
-const clearRoomList = () => {
-  $('#channel-list > div')
-    .remove();
-};
-
-// ナビゲーションバーの情報を消去
-const clearNavbar = () => {
-  $('.room-list-menu').text('ルーム');
-  $('#menu-profile-name').text('');
-  $('#menu-profile-image').attr({
-    src: defaultProfileImageURL,
-  });
-  clearRoomList();
-};
-
-// ルーム一覧をPublic Channelに表示する
-
-
-const showRoomList = (roomsSnapshot) => {
-  // 動的に追加されたルームを一旦削除する
-  clearRoomList();
-
-  roomsSnapshot.forEach((roomSnapshot) => {
-    
-    const roomName = roomSnapshot.key;
-    const roomNameFrame = $('<div>',{
-      class: 'room-join-flame d-flex justify-content-between',
-      id: `${roomName}`
-    })
-    $('#channel-list').append(roomNameFrame);
-    
-    const roomListLink = $('<span>', {
-      class: 'room-list-name',
-    }).text(roomName);
-    $('#channel-list').find(`#${roomName}`).append(roomListLink);
-    
-    const room_join = $('<button>', {
-      class: 'btn btn-success room-join-button',
-      type: 'button',
-      onclick: `location.href='#${roomName}'`,
-    }).text("参加");
-    $('#channel-list').find(`#${roomName}`).append(room_join);
-    
-  });
-};
-
 // 表示されているメッセージを消去
 const clearMessages = () => {
   $('#message-list').empty();
@@ -290,37 +253,24 @@ const changeLocationHash = (roomName) => {
 
 // ルームを実際に表示する
 const showRoom = (roomName) => {
-  if (!dbdata.rooms || !dbdata.rooms[roomName]) {
-    console.error('該当するルームがありません:', roomName);
-    return;
-  }
+ 
   currentRoomName = roomName;
-  $("#channel-title").text(currentRoomName);
-
+  
   clearMessages();
 
   // ルームのメッセージ一覧をダウンロードし、かつメッセージの追加を監視
-  const roomRef = firebase.database().ref(`messages/${roomName}`);
+  const roomRef = firebase.database().ref(`private_messages/${private_id}`);
 
   // 過去に登録したイベントハンドラを削除
   roomRef.off('child_added');
 
   // イベントハンドラを登録
   roomRef.on('child_added', (childSnapshot) => {
-    if (roomName === currentRoomName) {
-      
-      // 追加されたメッセージを表示
-      addMessage(childSnapshot.key, childSnapshot.val());
-    }
+    // 追加されたメッセージを表示
+    addMessage(childSnapshot.key, childSnapshot.val());
+
   });
 
-  // ナビゲーションバーのルーム表示を更新
-  $('.room-list-menu').text(`ルーム: ${roomName}`);
-
-
-  // ナビゲーションのドロップダウンメニューで現在のルームをハイライトする
-  $('#room-list > a').removeClass('active');
-  $(`.room-list__link[href='#${roomName}']`).addClass('active');
 };
 
 // チャット画面表示用のデータが揃った時に呼ばれる
@@ -349,19 +299,7 @@ const setMessageListMinHeight = () => {
  * ルームを削除する
  * なおルームが削除されると roomsRef.on("value", ...); のコールバックが実行され、初期ルームに移動する
  */
-const deleteRoom = (roomName) => {
 
-  firebase
-    .database()
-    .ref(`rooms/${roomName}`)
-    .remove();
-
-  // ルーム内のメッセージも削除
-  firebase
-    .database()
-    .ref(`messages/${roomName}`)
-    .remove();
-};
 
 // チャット画面の初期化処理
 const loadChatView = () => {
@@ -410,7 +348,7 @@ const loadChatView = () => {
   });
 
   // ルーム一覧を取得してさらに変更を監視
-  const roomsRef = firebase.database().ref('rooms');
+  const roomsRef = firebase.database().ref('private_rooms');
 
   // 過去に登録したイベントハンドラを削除
   roomsRef.off('value');
@@ -421,8 +359,6 @@ const loadChatView = () => {
 
     dbdata.rooms = roomsSnapshot.val();
 
-    // ルーム一覧を表示
-    showRoomList(roomsSnapshot);
 
     // usersデータがまだ来ていない場合は何もしない
     if (!dbdata.users) {
@@ -472,22 +408,6 @@ const onLogin = () => {
   showView('chat');
 };
 
-// ログアウトした直後に呼ばれる
-const onLogout = () => {
-  firebase
-    .database()
-    .ref('users')
-    .off('value');
-  firebase
-    .database()
-    .ref('rooms')
-    .off('value');
-  currentRoomName = null;
-  dbdata = {};
-  resetLoginForm();
-  resetChatView();
-  showView('chat');
-};
 
 // ユーザ作成のときパスワードが弱すぎる場合に呼ばれる
 const onWeakPassword = () => {
@@ -578,17 +498,7 @@ const catchErrorOnSignIn = (error) => {
 // ログイン状態の変化を監視する
 firebase.auth().onAuthStateChanged((user) => {
   // ログイン状態が変化した
-/*
-  if (user) {
-    // ログイン済
-    currentUID = user.uid;
-    onLogin();
-  } else {
-    // 未ログイン
-    currentUID = null;
-    onLogout();
-  }
-  */
+
   if (user) {
     currentUID = user.uid;
     onLogin();
@@ -606,45 +516,6 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// ログインフォームが送信されたらログインする
-$('#login-form').on('submit', (e) => {
-  e.preventDefault();
-
-  // フォームを初期状態に戻す
-  resetLoginForm();
-
-  // ログインボタンを押せないようにする
-  $('#login__submit-button')
-    .prop('disabled', true)
-    .text('送信中…');
-
-  const email = $('#login-email').val();
-  const password = $('#login-password').val();
-
-  /**
-   * ログインを試みて該当ユーザが存在しない場合は新規作成する
-   * まずはログインを試みる
-   */
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch((error) => {
-      console.log('ログイン失敗:', error);
-      if (error.code === 'auth/user-not-found') {
-        // 該当ユーザが存在しない場合は新規作成する
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            // 作成成功
-            console.log('ユーザを作成しました');
-          })
-          .catch(catchErrorOnCreateUser);
-      } else {
-        catchErrorOnSignIn(error);
-      }
-    });
-});
 
 /**
  * --------------
@@ -679,7 +550,7 @@ $('#comment-form').on('submit', (e) => {
   };
   firebase
     .database()
-    .ref(`messages/${currentRoomName}`)
+    .ref(`private_messages/${private_id}`)
     .push(message);
 });
 
@@ -763,7 +634,6 @@ $(document).on('click','.room-delete-button', (e) => {
   const delete_id =  $(e.target).parent('div').attr('id');
 
   console.log(delete_id);
-  deleteRoom(delete_id);
   $(`#${delete_id}`).remove();
 });
 
@@ -899,11 +769,10 @@ $('#settings-form').on('submit', (e) => {
 });
 
 // URLの#以降が変化したらそのルームを表示する
+/*
 $(window).on('hashchange', () => {
-  if (window.location.hash.length > 1) {
-    showRoom(decodeURIComponent(window.location.hash.substring(1)));
-  }
+  showRoom(decodeURIComponent(window.location.hash.substring(1)));
 });
-
+*/
 // ウインドウがリサイズされたら#message-listの高さを再調整
 $(window).on('resize', setMessageListMinHeight);

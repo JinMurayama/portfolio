@@ -154,9 +154,6 @@ new Vue({
   },
 });
 
-// 初期ルーム名
-const defaultRoomName = 'default';
-
 // 現在表示しているルーム名
 let currentRoomName = null;
 
