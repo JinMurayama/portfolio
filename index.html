@@ -253,7 +253,7 @@ $('a[href^=#]').on('click', () => {
                       <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
                         Private Cnannelを作成
                       </button>
-                      <div id="overlay" v-show="showContent">
+                      <div id="overlay" class="col-10" v-show="showContent">
                         <div id="private-content">
                           <p>Private Channelを新規で作成いたします。</p>
                           <form id = "new-channel-form">
@@ -300,10 +300,8 @@ $('a[href^=#]').on('click', () => {
                             <p class="mbr-step-text mbr-fonts-style display-7">
                               <h5>・Public Channelの一覧にいく</h5>slackと2チャンネルをイメージしました。
                               自身でチャンネルを作成し、匿名的にすぐやりとりをすることができます。</br>
-                              ※検索機能はまだ準備中です。
                               <h5>・Private Channelを作成する</h5>privateチャンネルを作成し、
                               URLを共有した方のみでチャットをすることができます。</br>
-                              ※private_chat画面は作成中です。
                             </p>
                         </div>
                     </div>

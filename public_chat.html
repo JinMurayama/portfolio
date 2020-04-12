@@ -135,32 +135,14 @@
               <form id = "new-channel-form">
                 <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
                 <input id="room-name" type="text">
-                <button class="btn btn-primary" type="submit">新規作成</button>
+                <button v-on:click="closeModal" class="btn btn-primary" type="submit">新規作成</button>
               </form>
               <p id="create-room__help" ></p>
               <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
             </div>
           </div>
         </div>
-<!--        <div class="d-flex"id="leave-lock">
-          <div id="leave">
-            <button type="button" class="btn btn-light bt-contents">
-              <i class="fas fa-sign-out-alt icon-function"></i>Leave 
-            </button>
-          </div>
-          <div id="lock">
-            <button type="button" class="btn btn-light bt-contents">
-              <i class="fas fa-lock icon-function"></i>Lock
-            </button>
-          </div>
-        </div>  !-->
         <div id="app">
-          <div id="channel-serach" class="d-flex justify-content-between">
-            <input v-model="keyword" id="search-input" class="form-control" type="text" placeholder="Search">
-           <!--  <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
-              Search
-            </button> !-->
-          </div>
           <div id="channel-contents">
             <div id="col-contents">
               <p class="channel-title">Public Channel一覧</p>

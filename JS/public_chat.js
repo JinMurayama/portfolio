@@ -17,30 +17,6 @@ new Vue({
     }
   }
 });
-
-//検索機能の実装
-/*
-new Vue({
-  el:"#app",
-  data:{
-    keyword: "",
-    rooms: [
-      {
-        
-      }]
-  },
-  computed:{
-    
-    for(var i in this.rooms){
-      
-    }
-  }
-})
-*/
-
-// プロフィール画像を設定していないユーザのデフォルト画像
-const defaultProfileImageURL = 'image/default-profile-image.png';
-
 // 初期ルーム名
 const defaultRoomName = 'default';
 
@@ -83,93 +59,6 @@ const updateNicknameDisplay = (uid) => {
   }
 };
 
-// プロフィール画像の表示を更新する
-const updateProfileImageDisplay = (uid, url) => {
-  $(`.profile-image-${uid}`).attr({
-    src: url,
-  });
-  if (uid === currentUID) {
-    $('#menu-profile-image').attr({
-      src: url,
-    });
-  }
-};
-
-// プロフィール画像をダウンロードして表示する
-const downloadProfileImage = (uid) => {
-  const user = dbdata.users[uid];
-  if (!user) {
-    return;
-  }
-  if (user.profileImageLocation) {
-    // profile-images/abcdef のようなパスから画像のダウンロードURLを取得
-    firebase
-      .storage()
-      .ref(user.profileImageLocation)
-      .getDownloadURL()
-      .then((url) => {
-        // 画像URL取得成功
-        user.profileImageURL = url;
-        updateProfileImageDisplay(uid, url);
-      })
-      .catch((error) => {
-        console.error('写真のダウンロードに失敗:', error);
-        user.profileImageURL = defaultProfileImageURL;
-        updateProfileImageDisplay(uid, defaultProfileImageURL);
-      });
-  } else {
-    // プロフィール画像が未設定の場合
-    user.profileImageURL = defaultProfileImageURL;
-    updateProfileImageDisplay(uid, defaultProfileImageURL);
-  }
-};
-
-/**
- * -----------------
- * お気に入り関連の関数
- * -----------------
- */
-
-// favoriteの表示用のdiv（jQueryオブジェクト）を作って返す
-const createFavoriteMessageDiv = (messageId, message) => {
-  // HTML内のテンプレートからコピーを作成
-  const divTag = $('.favorite-template .list-group-item').clone();
-
-  const user = dbdata.users[message.uid];
-  if (user) {
-    // ユーザが存在する場合
-    // 投稿者ニックネーム
-    divTag
-      .find('.favorite__user-name')
-      .addClass(`nickname-${message.uid}`)
-      .text(user.nickname);
-    // 投稿者プロフィール画像
-    divTag.find('.favorite__user-image').addClass(`profile-image-${message.uid}`);
-
-    if (user.profileImageURL) {
-      // プロフィール画像のURLを取得済みの場合
-      divTag.find('.favorite__user-image').attr({
-        src: user.profileImageURL,
-      });
-    }
-  }
-  // メッセージ本文
-  divTag.find('.favorite__text').text(message.text);
-  // 投稿日
-  divTag.find('.favorite__time').html(formatDate(new Date(message.time)));
-
-  // id属性をセット
-  divTag.attr('id', `favorite-message-id-${messageId}`);
-
-  return divTag;
-};
-
-// favoriteを表示する
-const addFavoriteMessage = (messageId, message) => {
-  const divTag = createFavoriteMessageDiv(messageId, message);
-  divTag.appendTo('#favorite-list');
-};
-
 /**
  * -------------------
  * チャット画面関連の関数
@@ -196,14 +85,7 @@ const createMessageDiv = (messageId, message) => {
     .find('.message__user-name')
     .addClass(`nickname-${message.uid}`)
     .text(message.name);
-  // 投稿者プロフィール画像
-  divTag.find('.message__user-image').addClass(`profile-image-${message.uid}`);
-  if (user.profileImageURL) {
-    // プロフィール画像のURLを取得済みの場合
-    divTag.find('.message__user-image').attr({
-      src: user.profileImageURL,
-    });
-  }
+
   // メッセージ本文
   divTag.find('.message__text').text(message.text);
   // 投稿日
@@ -221,23 +103,13 @@ const addMessage = (messageId, message) => {
   divTag.appendTo('#message-list');
 
   // 一番下までスクロール
-  $('html, body').scrollTop($(document).height());
+  $('#message-list').scrollTop($(document).height());
 };
 
 // 動的に追加されたルームを一旦削除する
 const clearRoomList = () => {
   $('#channel-list > div')
     .remove();
-};
-
-// ナビゲーションバーの情報を消去
-const clearNavbar = () => {
-  $('.room-list-menu').text('ルーム');
-  $('#menu-profile-name').text('');
-  $('#menu-profile-image').attr({
-    src: defaultProfileImageURL,
-  });
-  clearRoomList();
 };
 
 // ルーム一覧をPublic Channelに表示する
@@ -431,7 +303,6 @@ const loadChatView = () => {
 
     Object.keys(dbdata.users).forEach((uid) => {
       updateNicknameDisplay(uid);
-      downloadProfileImage(uid);
     });
 
     // usersとroomsが揃ったらルームを表示（初回のみ）
@@ -504,82 +375,12 @@ const showView = (id) => {
  * -------------------------
  */
 
-// ログインフォームを初期状態に戻す
-const resetLoginForm = () => {
-  $('#login-form > .form-group').removeClass('has-error');
-  $('#login__help').hide();
-  $('#login__submit-button')
-    .prop('disabled', false)
-    .text('ログイン');
-};
 
 // ログインした直後に呼ばれる
 const onLogin = () => {
-  console.log('ログイン完了');
 
   // チャット画面を表示
   showView('chat');
-};
-
-// ログアウトした直後に呼ばれる
-const onLogout = () => {
-  firebase
-    .database()
-    .ref('users')
-    .off('value');
-  firebase
-    .database()
-    .ref('rooms')
-    .off('value');
-  currentRoomName = null;
-  dbdata = {};
-  resetLoginForm();
-  resetChatView();
-  showView('chat');
-};
-
-// ユーザ作成のときパスワードが弱すぎる場合に呼ばれる
-const onWeakPassword = () => {
-  resetLoginForm();
-  $('#login__password').addClass('has-error');
-  $('#login__help')
-    .text('6文字以上のパスワードを入力してください')
-    .fadeIn();
-};
-
-// ログインのときパスワードが間違っている場合に呼ばれる
-const onWrongPassword = () => {
-  resetLoginForm();
-  $('#login__password').addClass('has-error');
-  $('#login__help')
-    .text('正しいパスワードを入力してください')
-    .fadeIn();
-};
-
-// ログインのとき試行回数が多すぎてブロックされている場合に呼ばれる
-const onTooManyRequests = () => {
-  resetLoginForm();
-  $('#login__submit-button').prop('disabled', true);
-  $('#login__help')
-    .text('試行回数が多すぎます。後ほどお試しください。')
-    .fadeIn();
-};
-
-// ログインのときメールアドレスの形式が正しくない場合に呼ばれる
-const onInvalidEmail = () => {
-  resetLoginForm();
-  $('#login__email').addClass('has-error');
-  $('#login__help')
-    .text('メールアドレスを正しく入力してください')
-    .fadeIn();
-};
-
-// その他のログインエラーの場合に呼ばれる
-const onOtherLoginError = () => {
-  resetLoginForm();
-  $('#login__help')
-    .text('ログインに失敗しました')
-    .fadeIn();
 };
 
 /**
@@ -595,55 +396,13 @@ const onOtherLoginError = () => {
  * --------------------
  */
 
-// ユーザ作成に失敗したことをユーザに通知する
-const catchErrorOnCreateUser = (error) => {
-  // 作成失敗
-  console.error('ユーザ作成に失敗:', error);
-  if (error.code === 'auth/weak-password') {
-    onWeakPassword();
-  } else {
-    // その他のエラー
-    onOtherLoginError(error);
-  }
-};
-
-// ログインに失敗したことをユーザーに通知する
-const catchErrorOnSignIn = (error) => {
-  if (error.code === 'auth/wrong-password') {
-    // パスワードの間違い
-    onWrongPassword();
-  } else if (error.code === 'auth/too-many-requests') {
-    // 試行回数多すぎてブロック中
-    onTooManyRequests();
-  } else if (error.code === 'auth/invalid-email') {
-    // メールアドレスの形式がおかしい
-    onInvalidEmail();
-  } else {
-    // その他のエラー
-    onOtherLoginError(error);
-  }
-};
-
 // ログイン状態の変化を監視する
 firebase.auth().onAuthStateChanged((user) => {
   // ログイン状態が変化した
-/*
-  if (user) {
-    // ログイン済
-    currentUID = user.uid;
-    onLogin();
-  } else {
-    // 未ログイン
-    currentUID = null;
-    onLogout();
-  }
-  */
   if (user) {
     currentUID = user.uid;
     onLogin();
-    console.log('ログインしました');
   } else {
-    console.log('ログインしていません');
 
     firebase
       .auth()
@@ -655,45 +414,6 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-// ログインフォームが送信されたらログインする
-$('#login-form').on('submit', (e) => {
-  e.preventDefault();
-
-  // フォームを初期状態に戻す
-  resetLoginForm();
-
-  // ログインボタンを押せないようにする
-  $('#login__submit-button')
-    .prop('disabled', true)
-    .text('送信中…');
-
-  const email = $('#login-email').val();
-  const password = $('#login-password').val();
-
-  /**
-   * ログインを試みて該当ユーザが存在しない場合は新規作成する
-   * まずはログインを試みる
-   */
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .catch((error) => {
-      console.log('ログイン失敗:', error);
-      if (error.code === 'auth/user-not-found') {
-        // 該当ユーザが存在しない場合は新規作成する
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            // 作成成功
-            console.log('ユーザを作成しました');
-          })
-          .catch(catchErrorOnCreateUser);
-      } else {
-        catchErrorOnSignIn(error);
-      }
-    });
-});
 
 /**
  * --------------
@@ -821,131 +541,6 @@ $(document).on('click','.room-delete-button', (e) => {
  * ユーザ情報設定関連
  * ---------------
  */
-
-$('#settingsModal').on('show.bs.modal', (e) => {
-  // #settingsModalが表示される直前に実行する処理
-
-  if (!dbdata.users) {
-    e.preventDefault();
-  }
-
-  // ハンバーガーメニューが開いている場合は閉じる
-  $('#navbarSupportedContent').collapse('hide');
-
-  // ニックネームの欄に現在の値を入れる
-  $('#settings-nickname').val(dbdata.users[currentUID].nickname);
-
-  const user = dbdata.users[currentUID];
-  if (user.profileImageURL) {
-    // プロフィール画像のURLをすでに取得済
-    $('#settings-profile-image-preview').attr({
-      src: user.profileImageURL,
-    });
-  } else if (user.profileImageLocation) {
-    // プロフィール画像は設定されているがURLは未取得
-    firebase
-      .storage()
-      .ref(`profile-images/${currentUID}`)
-      .getDownloadURL()
-      .then((url) => {
-        $('#settings-profile-image-preview').attr({
-          src: url,
-        });
-      });
-  }
-});
-
-// ニックネーム欄の値が変更されたらデータベースに保存する
-$('#settings-nickname').on('change', (e) => {
-  const newName = $(e.target).val();
-  if (newName.length === 0) {
-    // 入力されていない場合は何もしない
-    return;
-  }
-  firebase
-    .database()
-    .ref(`users/${currentUID}`)
-    .update({
-      nickname: newName,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP,
-    });
-});
-
-// プロフィール画像のファイルが指定されたらアップロードする
-$('#settings-profile-image').on('change', (e) => {
-  const input = e.target;
-  const { files } = input;
-  if (files.length === 0) {
-    // ファイルが選択されていない場合
-    return;
-  }
-
-  const file = files[0];
-  const metadata = {
-    contentType: file.type,
-  };
-
-  // ローディング表示
-  $('#settings-profile-image-preview').hide();
-  $('#settings-profile-image-loading-container').css({
-    display: 'inline-block',
-  });
-
-  // ファイルアップロードを開始
-  firebase
-    .storage()
-    .ref(`profile-images/${currentUID}`)
-    .put(file, metadata)
-    .then(() => {
-      // アップロード成功したら画像表示用のURLを取得
-      firebase
-        .storage()
-        .ref(`profile-images/${currentUID}`)
-        .getDownloadURL()
-        .then((url) => {
-          // 画像のロードが終わったらローディング表示を消して画像を表示
-          $('#settings-profile-image-preview').on('load', (evt) => {
-            $('#settings-profile-image-loading-container').css({
-              display: 'none',
-            });
-            $(evt.target).show();
-          });
-          $('#settings-profile-image-preview').attr({
-            src: url,
-          });
-
-          // ユーザ情報を更新
-          firebase
-            .database()
-            .ref(`users/${currentUID}`)
-            .update({
-              profileImageLocation: `profile-images/${currentUID}`,
-              updatedAt: firebase.database.ServerValue.TIMESTAMP,
-            });
-        });
-    })
-    .catch((error) => {
-      console.error('プロフィール画像のアップロードに失敗:', error);
-    });
-});
-
-// プロフィール画像のファイルが指定されたら、そのファイル名を表示する
-$('#settings-profile-image').on('change', (e) => {
-  const input = e.target;
-  const $label = $('#settings-profile-image-label');
-  const file = input.files[0];
-
-  if (file != null) {
-    $label.text(file.name);
-  } else {
-    $label.text('ファイルを選択');
-  }
-});
-
-// ユーザ情報設定フォームが送信されてもペー��遷移しない
-$('#settings-form').on('submit', (e) => {
-  e.preventDefault();
-});
 
 // URLの#以降が変化したらそのルームを表示する
 $(window).on('hashchange', () => {

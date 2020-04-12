@@ -5,11 +5,13 @@ let private_id="";
 
 let PrivateChannelTitle="";
 
+var scrollPosition;
+
+
 Vue.component('buttoncontents',{
   data(){
     return {
       url:`https://jin-portfolio.sakura.ne.jp/private_chat.html#${private_id}`,
-      location_url: `location.href='private_chat.html#${private_id}'`,
       url_active:'',
       QR_active:'',
     }
@@ -39,13 +41,17 @@ Vue.component('buttoncontents',{
       $('#url_input').select();
       
       document.execCommand("Copy");
+    },
+    open_url(){
+      window.open(this.url, '_blank');
+      modal.closeModal();
     }
   },
   template:`
     <div>
       <button id="url_share" v-on:click='showurl' type="button" class="btn btn-outline-success">urlでshare</button>
       <button id="qr_share" v-on:click='showQR' type="button" class="btn btn-outline-success">QRでshare</button>
-      <button id="new_private_button" type="button" v-bind:onclick='location_url' class="btn btn-success">privateルームへ行く</button>
+      <button id="new_private_button" target="_blank" type="button" v-on:click='open_url' class="btn btn-success">privateルームへ行く</button>
       <div id = "urlshare" v-show='url_active'>
         <input id="url_input" v-bind:value='url'><button class="btn btn-success" id="url_copy" v-on:click="copyToClipboard" type="button">urlをコピー</button>
       </div>
@@ -65,10 +71,9 @@ function create_privateid( n ){
   return r;
 }
 
-var scrollPosition;
 
 //モーダルウィンドウの表示
-new Vue({
+const modal = new Vue({
   el: "#new_private_channel",
   data: {
     showContent: false,
@@ -89,7 +94,6 @@ new Vue({
       window.scrollTo( 0 , scrollPosition );
       $('#create-room__help').hide();
       $('#create-room__success').hide();
-      //$('#button-contents').hide();
       this.InputForm="";
       this.isActive=false;
     },

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="generator" content="Mobirise v4.12.3, mobirise.com">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1 shrink-to-fit=no">
   <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
   <meta name="description" content="Web Site Builder Description">
   
@@ -55,14 +55,6 @@
   
 <section class="menu cid-rUIyjIuUbM" once="menu" id="menu1-1">
     <nav id="chat-navbar" class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </button>
         <div class="menu-logo">
             <div class="navbar-brand">
                 <span class="navbar-logo">
@@ -84,81 +76,37 @@
       </div>
     </div>
   </div>
-  <div class="d-flex" id="chat-contents">
-    <div class="d-flex flex-column"id="side-bar">
-      <div id="function-contents">
-        <div id="new_public_channel">
-          <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
-            <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
-          </button>
-          <div id="overlay1" v-show="showContent">
-            <div id="content">
-              <p>Public Channelを新規で作成いたします。</p>
-              <form id = "new-channel-form">
-                <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
-                <input id="room-name" type="text">
-                <button class="btn btn-primary" type="submit">新規作成</button>
-              </form>
-              <p id="create-room__help" ></p>
-              <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
-            </div>
-          </div>
-        </div>
-<!--        <div class="d-flex"id="leave-lock">
-          <div id="leave">
-            <button type="button" class="btn btn-light bt-contents">
-              <i class="fas fa-sign-out-alt icon-function"></i>Leave 
-            </button>
-          </div>
-          <div id="lock">
-            <button type="button" class="btn btn-light bt-contents">
-              <i class="fas fa-lock icon-function"></i>Lock
-            </button>
-          </div>
-        </div>  !-->
-        <div id="app">
-          <div id="channel-serach" class="d-flex justify-content-between">
-            <input v-model="keyword" id="search-input" class="form-control" type="text" placeholder="Search">
-           <!--  <button id="search-button" class="btn btn-outline-success " v-on:click.prevent="getArticles()">
-              Search
-            </button> !-->
-          </div>
-          <div id="channel-contents">
-            <div id="col-contents">
-              <p class="channel-title">Public Channel一覧</p>
-            </div>
-            <div id="channel-list">
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="row justify-content-between" id="side-bar">
+      <div id="new_private_channel" class="col-lg-3 row container">
+        <buttoncontents></buttoncontents>
       </div>
+      <section id="chat" class="view col-lg-9">
+        
+        <!-- メッセージ表示部 -->
+        <div id="message-list" class="clearfix"></div>
+        
+           <!-- メッセージ投稿フォーム -->
+        <form id="comment-form">
+          <div class="input-group">
+            <div id="form-name">
+              <label>name</label>
+              <input id="name-form__text" type="text" class="form-control">
+            </div>
+            <div id="form-comment">
+              <label id="message-label">message</label>
+              <textarea id="comment-form__text" rows="1" class="form-control"></textarea>
+              <span class="input-group-append">
+                <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+          <!-- /.input-group -->
+        </form>
+      </section>
     </div>
-    <div id="channel-title"></div>
-    <section id="chat" class="view">
-      
-      <!-- メッセージ表示部 -->
-      <div id="message-list" class="clearfix"></div>
-      
-         <!-- メッセージ投稿フォーム -->
-      <form id="comment-form">
-        <div class="input-group">
-          <div id="form-name">
-            <label>name</label>
-            <input id="name-form__text" type="text" class="form-control">
-          </div>
-          <div id="form-comment">
-            <label>message</label>
-            <textarea id="comment-form__text" rows="1" class="form-control"></textarea>
-            <span class="input-group-append">
-              <button type="submit" class="btn btn-primary comment-form__submit" style="padding: 10px"aria-label="送信">
-                <i class="fa fa-paper-plane" aria-hidden="true"></i>
-              </button>
-            </span>
-          </div>
-        </div>
-        <!-- /.input-group -->
-      </form>
-    </section>
   </div>
 </section>
 
@@ -178,7 +126,6 @@
   <script src="assets/formoid/formoid.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
- 
   
     <!-- Firebaseのセットアップコード（下記のSDKのバージョンは6.2.0） -->
   <!-- The core Firebase JS SDK is always required and must be listed first
@@ -210,7 +157,8 @@ firebase.initializeApp(firebaseConfig);
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   
   
-   <script src="JS/private_chat.js"></script>
-  
+  <script src="JS/private_chat.js"></script>
+    <script type="text/javascript" src="JS/jquery.qrcode.min.js"></script>
+    
 </body>
 </html>

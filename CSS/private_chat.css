@@ -6,12 +6,6 @@
   height: 600px;
 }
 
-#side-bar{
-  width: 30%;
-  padding-right: 5px;
-  margin-right: 20px;
-  border-right: 1px solid black;
-}
 
 .bt-contents{
   border-radius: 10px;
@@ -35,15 +29,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-
-#search-input{
-  margin-left: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 0;
-  width: 70%;
 }
 
 #search-button{
@@ -112,12 +97,9 @@
 }
 
 #message-list {
-  max-width: 650px;
-  min-height: 480px;
-  max-height: 480px;
+  height: auto;
+  max-height: 360px;
   overflow: auto;
- /* min-height: calc(100vh - 51px - 46px + 6px);*/
-  margin: 0 auto 40px auto;
   padding: 10px 10px 6px 10px;
   border-width: 0 1px;
   border-style: solid;
@@ -168,9 +150,7 @@
 }
 
 .message--received .message__profile,
-.message--received .message__body {
-  float: left;
-}
+.message--received 
 
 .message--sent .message__profile,
 .message--sent .message__body {
@@ -294,13 +274,81 @@
 #comment-form__text{
   min-height: 45px;
   padding: 10px 9px;
-}
-
-#chat{
-  width: auto;
-  min-width: 800px;
+  width: 80%;
+  display: inline-block;
 }
 
 #create-room__help{
   color:red;
+}
+
+canvas{
+  margin-top: 10px!important;
+  margin-right: 25px!important;
+  left: 0!important;
+}
+
+#qrcode{
+  text-align: right!important
+}
+
+#url_input {
+  width: 85%!important;
+  display: block;
+}
+
+#url_copy{
+  margin-left: 0;
+  margin-top: 10px;
+  display: inline-block;
+  margin-right: 0!important;
+}
+
+#url_share{
+  display: inline-block;
+  margin: 0.4rem 0.4rem!important;
+}
+
+#QR_share{
+  margin: 0.4rem 0.4rem!important;
+}
+
+#url_input{
+  display:inline;
+}
+
+
+#button-contents{
+  float: left;
+  left: 0!important;
+  width: 100%;
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+
+.title{
+  margin-bottom: 0!important;
+}
+
+#new_private_channel{
+  padding: 0!important;
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+
+#qr_share{
+  float: right;
+}
+
+#message-label{
+  display: block;
+}
+
+.input-group-append {
+  display: inline-block!important;
+}
+
+.comment-form__submit{
+  position: relative;
+  top: -15px;
 }

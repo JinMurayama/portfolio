@@ -15,12 +15,11 @@ body.fixed {
 
   /*　画面全体を覆う設定　*/
   position:fixed;
-  top:30%;
-  left:27%;
+  top:20%;
   bottom: 0;
   right: 0;
-  width:40%;
-  height:55%;
+  height:50%;
+  left: 8%;
   background-color: #fff;
   border: 2px solid black;
   border-radius: 20px;
@@ -98,5 +97,9 @@ canvas{
 }
 
 #url_input{
-  width: 50%;
+  width: 35%;
+}
+
+.col-form-label{
+  display: block;
 }
