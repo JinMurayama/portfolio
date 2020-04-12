@@ -18,4 +18,3 @@ $('.animated').waypoint({
   
   offset: '80%',
 });
-

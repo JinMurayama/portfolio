@@ -20,11 +20,11 @@ $('a[href^=#]').on('click', () => {
   $('html, body').animate({scrollTop:position}, speed, 'swing');
   return false;
 }); 
-  
   </script>
   
   <title>Home</title>
   <link rel="stylesheet" href="CSS/main.css">
+  <link rel="stylesheet" href="CSS/map.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -35,7 +35,7 @@ $('a[href^=#]').on('click', () => {
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-
+  
 </head>
 <body>
   <section class="menu cid-rUIyjIuUbM" once="menu" id="menu1-1">
@@ -315,61 +315,49 @@ $('a[href^=#]').on('click', () => {
 <section class="step3 cid-rUIz7M2e67 animated" id="step3-7">
     <div class="container">
         <h2 class="mbr-section-title pb-3 mbr-fonts-style align-center display-2">
-            map</h2>
-        <h3 class="mbr-section-subtitle pb-5 mbr-fonts-style align-center display-5">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit
-        </h3>
+          Google Map
+        </h2>
         <div class="media-container-row">
             <div class="media-block" style="width: 49%;">
-                <div class="mbr-figure">
-                    <img src="assets/images/background6.jpg">
-                </div>
+              <div id="googlemap" class="mbr-figure">
+              </div>
             </div>
             <div class="step-container">
                 <div class="card separline pb-4">
                     <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                1
-                            </div>
-                        </div>          
                         <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Specification
-                            </h4>
-                            <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
-                            </p>
+                          <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
+                            Specification
+                          </h4>
+                          <p class="mbr-step-text mbr-fonts-style display-7">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                          </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="card separline pb-4">
                     <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                2
-                            </div>
-                        </div>          
                         <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Project Planning</h4>
-                            <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.</p>
+                          <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
+                            Project Planning
+                          </h4>
+                          <p class="mbr-step-text mbr-fonts-style display-7">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                          </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                3
-                            </div>
-                        </div>          
                         <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Deployment
-                            </h4>
-                            <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.</p>
+                          <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
+                            Deployment
+                          </h4>
+                          <p class="mbr-step-text mbr-fonts-style display-7">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                          </p>
                         </div>
                     </div>
                 </div>
@@ -614,6 +602,11 @@ firebase.initializeApp(firebaseConfig);
   </script>
   <script src="JS/private_create.js"></script>
   <script type="text/javascript" src="JS/jquery.qrcode.min.js"></script>
+
+  <!-- google map apiの実装!-->
+  <script type="text/javascript" src="JS/map.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5PnN0928erBiNqIt_l9idktLcO0egCIc&callback=initMap"></script>
+
 
 </body>
 
