@@ -327,10 +327,10 @@ $('a[href^=#]').on('click', () => {
                     <div class="step-element d-flex">
                         <div class="step-text-content">
                           <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
-                            Specification
+                            概要
                           </h4>
                           <p class="mbr-step-text mbr-fonts-style display-7">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                            Google Maps APIとぐるなびAPIを用いて、現在地とMapを移動させたい際、近くの店舗を表示する
                           </p>
                         </div>
                     </div>
@@ -340,27 +340,21 @@ $('a[href^=#]').on('click', () => {
                     <div class="step-element d-flex">
                         <div class="step-text-content">
                           <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
-                            Project Planning
+                            機能の説明
                           </h4>
                           <p class="mbr-step-text mbr-fonts-style display-7">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                            ・現在地を中心として、周辺の店舗をpinでたてる</br>
+                            ・google mapを移動させたとき、移動させた周辺の店舗をpinでたてる</br>
+                            ・リストを作成し、クリックしたら、google mapにpinをたてるよう連携</br>
+                            ・pinをクリックしたら、お店の詳細ページを表示する</br>
                           </p>
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="step-element d-flex">
-                        <div class="step-text-content">
-                          <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
-                            Deployment
-                          </h4>
-                          <p class="mbr-step-text mbr-fonts-style display-7">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
-                          </p>
-                        </div>
-                    </div>
-                </div>
+                
+                <button id="shops-location-button" onclick="location.href='map.html'" type="button" class="btn btn-primary bt-contents">
+                  現在地周辺の店舗を見に行く
+                </button>
             </div>
         </div>
     </div>
@@ -604,7 +598,6 @@ firebase.initializeApp(firebaseConfig);
   <script type="text/javascript" src="JS/jquery.qrcode.min.js"></script>
 
   <!-- google map apiの実装!-->
-  <script type="text/javascript" src="JS/map.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5PnN0928erBiNqIt_l9idktLcO0egCIc&callback=initMap"></script>
 
 

@@ -103,3 +103,14 @@ canvas{
 .col-form-label{
   display: block;
 }
+
+#googlemap{
+  width: 520px;
+  height: 450px;
+}
+
+#shops-location-button{
+  position: relative;
+  float: left;
+  left: 0%;
+}
