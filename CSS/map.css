@@ -2,8 +2,13 @@
   width: 540px;
   height: 600px;
 }
+
 #sponser{
   position: relative;
   top: 40px;
   left: -15px;
+}
+
+td{
+  width:49%;
 }

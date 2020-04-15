@@ -20,11 +20,16 @@ $('.animated').waypoint({
 });
 
 
+
 function initMap() {
   
   function success(position){
-    var latitude  = position.coords.latitude;//緯度
-    var longitude = position.coords.longitude;//経度
+//    latitude  = position.coords.latitude;//緯度
+//    longitude = position.coords.longitude;//経度
+
+    var latitude = 35.681432
+    var longitude = 139.767103    
+    
     var latlng = new google.maps.LatLng( latitude , longitude ) ;
     var map = new google.maps.Map(document.getElementById("googlemap"), {
       zoom: 15,

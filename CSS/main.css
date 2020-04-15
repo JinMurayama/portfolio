@@ -114,3 +114,7 @@ canvas{
   float: left;
   left: 0%;
 }
+
+#step3-7 .step-container{
+  padding-left: 32px!important;
+}
