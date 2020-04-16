@@ -12,3 +12,36 @@
 td{
   width:49%;
 }
+
+.gm-style-iw-d{
+  min-height: 71px!important;
+}
+
+.gm-style-iw-d img{
+  width: 41%;
+  float: left;
+  padding-right: 5px;
+  display: inline-block;
+}
+
+.map-button{
+  padding: 0!important;
+  margin: 0!important;
+  float: left!important;
+  display: inline-block!important;
+  top: 15px!important;
+  position: relative!important;
+}
+
+thead, tbody{
+  display: inline-block;
+}
+
+tbody {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+.shops-name{
+  cursor: pointer;
+}
