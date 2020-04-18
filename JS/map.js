@@ -8,6 +8,42 @@ var markerData = [];
 var latlng;
 var lat;
 var lng;
+var hit = 10;
+
+new Vue({
+  el:"#search-form",
+  data:{
+    search_text: null,
+    dates: null,
+  },
+  created(){
+    let vm=this;
+    setTimeout(() => {
+      vm.dates = markerData;
+    },1000)
+  },
+  computed:{
+    search_shop: function(){
+      if(this.search_text){
+        for(let j = 1 ; j <= hit ; j  ++){
+          if(this.dates[j].name.toLowerCase().indexOf(this.search_text) === -1) {
+            $(`#${j}`).hide();
+            $(`.${j}`).hide();
+          }else{
+            $(`#${j}`).show();
+            $(`.${j}`).show();
+          }
+        }
+      }
+      else{
+        for(let j = 1 ; j <= hit ; j  ++){
+          $(`#${j}`).show();
+          $(`.${j}`).show();
+        }
+      }
+    },
+  },
+});
 
 function initMap() {
   
@@ -15,8 +51,8 @@ function initMap() {
     latitude  = position.coords.latitude;//緯度
     longitude = position.coords.longitude;//経度
 
-    latitude = 35.681432
-    longitude = 139.767103
+    //latitude = 35.681432
+    //longitude = 139.767103
     latlng = new google.maps.LatLng( latitude , longitude ) ;
     map = new google.maps.Map(document.getElementById("googlemap"), {
       zoom: 15,
@@ -26,7 +62,7 @@ function initMap() {
       map : map,             // 対象の地図オブジェクト
       position : latlng,   // 緯度・経度
       icon : {
-        url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+        url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
       },
       
     });
@@ -51,7 +87,7 @@ function initMap() {
         map : map,             // 対象の地図オブジェクト
         position : latlng,   // 緯度・経度
         icon : {
-          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
         },
       
       });
@@ -81,7 +117,7 @@ function initMap() {
       map : map,             // 対象の地図オブジェクト
       position : latlng,   // 緯度・経度
       icon : {
-        url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+        url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
       },
       
     });
@@ -106,7 +142,7 @@ function initMap() {
         map : map,             // 対象の地図オブジェクト
         position : latlng,   // 緯度・経度
         icon : {
-          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
         },
       
       });
@@ -155,11 +191,13 @@ const clearResult = () => {
 
 }
 
+let active=[];
+
 const showResult = result => {
   let i = 1;
   clearResult();
   result.rest.map( item => {
-    $("#table").append(`<tr><td class="shops-name" id="${i}">${item.name}</td><td>${item.opentime}</td></tr>`)
+    $("#table").append(`<tr><td class="shops-name" id="${i}">${item.name}</td><td class="${i}">${item.opentime}</td></tr>`)
     
     addInfo(i, item.name, item.image_url.shop_image1, item.url);
     console.log(item.image_url.shop_image1);
@@ -175,10 +213,16 @@ const showResult = result => {
     //イベントリスナー追加
     $(`#${i}`).on('click', (e) => {
       var shop_id = e.target.id;
-      infoWindow[shop_id].open(map, marker[shop_id]);
+      
+      if(active[i] === true){
+        infoWindow[shop_id].open(map, marker[shop_id]);
+        active[i] = false;
+      }else{
+        infoWindow[shop_id].close(map, marker[shop_id]);
+        active[i] = true;
+      }
     });
     
-    //    console.log(i);
     console.log(markerData[i].name);
     i++;
   })
@@ -193,7 +237,7 @@ const getResult = (lati, longi) => {
     latitude: lati,
     longitude: longi,
     range: 2,
-    hit_per_page: 10,
+    hit_per_page: hit,
   }
   params.keyid ="77699251ac9ac9c426b7d38ab645ea64";
   $.getJSON( url, params, result => {

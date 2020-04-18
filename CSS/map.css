@@ -34,14 +34,20 @@ td{
 }
 
 thead, tbody{
-  display: inline-block;
+  display: block;
 }
 
 tbody {
+  display: inline-block;
   max-height: 550px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .shops-name{
   cursor: pointer;
+}
+
+#serach_form{
+  width: 265px;
+  margin-top: 15px;
 }
