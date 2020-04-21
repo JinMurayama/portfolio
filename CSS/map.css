@@ -7,6 +7,16 @@
   height: 600px;
 }
 
+#content{
+  width: 100vw!important;
+  max-width: 100vw!important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
 #sponser{
   position: relative;
   top: 40px;
@@ -23,6 +33,11 @@ td{
 
 .gm-style-iw-d{
   min-height: 71px!important;
+}
+
+.active{
+  color: #ffffff;
+	background-color: #00BCD4;
 }
 
 .gm-style-iw-d img{
@@ -66,4 +81,99 @@ tbody {
 
 tbody shops_name{
   opacity: 0.5;
+}
+
+nav.cp_navi *, nav.cp_navi *:after, nav.cp_navi *:before {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+nav.cp_navi a {
+	text-decoration: none;
+}
+nav.cp_navi {
+	margin-top: 0px;
+	text-align: center;
+}
+.cp_navi .cp_pagination {
+	display: inline-block;
+	height: 70px;
+	margin-top: 1em;
+	padding: 0 20px;
+	border-radius: 35px;
+	background-color: #eeeeee;
+}
+.cp_navi .cp_pagenum {
+	font-size: 1.2em;
+	line-height: 70px;
+	display: block;
+	float: left;
+	padding: 0 19px;
+	transition: 400ms ease;
+	letter-spacing: 0.1em;
+	color: #595959;
+}
+.cp_navi .cp_pagenum:hover,
+.cp_navi .cp_pagenum.current {
+	color: #ffffff;
+	background-color: #00BCD4;
+}
+.cp_navi .cp_pagenum.prev:hover,
+.cp_navi .cp_pagenum.next:hover {
+	color: #00BCD4;
+	background-color: transparent;
+}
+@media only screen and (max-width: 960px) {
+	.cp_navi .cp_pagination {
+		height: 50px;
+		margin-top: 0;
+		padding: 0 20px;
+		border-radius: 25px;
+	}
+	.cp_navi .cp_pagenum {
+	font-size: 0.8em;
+	line-height: 50px;
+	padding: 0 15px;
+	}
+	.cp_navi .cp_pagenum.prev,
+	.cp_navi .cp_pagenum.next {
+		padding: 0 10px;
+	}
+}
+@media only screen and (min-width: 120px) and (max-width: 767px) {
+	
+	nav.cp_navi {
+	margin-top: 15px!important;
+	text-align: center;
+	}
+	
+	.cp_navi .cp_pagenum {
+	padding: 0 10px;
+	}
+	/*
+	.cp_navi .cp_pagenum:nth-of-type(2) {
+	position: relative;
+	padding-right: 50px;
+	}
+	.cp_navi .cp_pagenum:nth-of-type(2)::after {
+	font-size: 1.2em;
+	position: absolute;
+	top: 0;
+	left: 45px;
+	content: '...';
+	}
+	.cp_navi .cp_pagenum:nth-child(-n+2),
+	.cp_navi .cp_pagenum:nth-last-child(-n+2) {
+		display: block;
+	}
+	.cp_navi .cp_pagenum:nth-last-child(-n+3) {
+		padding-right: 14px;
+	}
+	.cp_navi .cp_pagenum:nth-last-child(-n+3)::after {
+		content: none;
+	}
+	.cp_navi .cp_pagenum.prev,
+	.cp_navi .cp_pagenum.next {
+		padding: 0 5px;
+	}
+	*/
 }

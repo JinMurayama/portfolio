@@ -9,41 +9,94 @@ var latlng;
 var lat;
 var lng;
 var hit = 10;
+var show_list = 5;
+var perPage = hit/show_list;
+var showpage=[];
+var currentPage=1;
+var before_page=1;
+
+Vue.component('button-paging', {
+  
+  template:`
+  <nav class="cp_navi">
+    <div class="cp_pagination">
+      <a class="cp_pagenum" 
+      v-for="n in perPage" :key="n"
+      v-bind:id="['b-'+n]"
+      >{{n}}</a>
+    </div>
+  </nav>
+  `
+})
+
+$(document).on('click','.cp_pagenum', (e) => {
+  const click_id =  $(e.target).attr('id');
+
+  var str = click_id.split('-')
+  before_page = currentPage;
+  currentPage = Number(str[1]);
+
+  split_page();
+});
+
+const init_list = () => {
+  for(let i = 0 ; i < hit ; i++){
+    showpage[i]=i+1
+  }
+}
+
+const split_page = () => {
+  $(`#b-${before_page}`).removeClass('active');
+  $(`#b-${currentPage}`).addClass('active');
+  for(let i = 0 ; i < hit ; i++){
+    if(show_list * (currentPage-1) <= i && i < show_list * currentPage){
+      $(`#row-${showpage[i]}`).show();
+    }else{
+      $(`#row-${showpage[i]}`).hide();
+    }
+  }
+}
 
 new Vue({
-  el:"#search-form",
+  el:"#sidbar",
   data:{
     search_text: null,
     dates: null,
+  },
+  beforeCreat(){
+    setTimeout(1000);
   },
   created(){
     let vm=this;
     setTimeout(() => {
       vm.dates = markerData;
-    },1000)
+      init_list();
+      split_page();
+    }, 1000)
+  },
+  methods:{
+    change_page:function(){
+    }
   },
   computed:{
     search_shop: function(){
       if(this.search_text){
         for(let j = 1 ; j <= hit ; j++){
           if(this.dates[j].name.toLowerCase().indexOf(this.search_text) === -1) {
-            $(`#${j}`).hide();
-            $(`.${j}`).hide();
+            $(`#row-${j}`).hide();
           }else{
-            $(`#${j}`).show();
-            $(`.${j}`).show();
+            $(`#row-${j}`).show();
           }
         }
       }
       else{
-        for(let j = 1 ; j <= hit ; j++){
-          $(`#${j}`).show();
-          $(`.${j}`).show();
-        }
+        split_page();
       }
     },
   },
-});
+
+  
+})
 
 function initMap() {
   
@@ -76,6 +129,7 @@ function initMap() {
     // clickイベントを取得するListenerを追加
     marker[0].addListener('click', () => {
       opencloseWindw(0);
+      marker[0].setAnimation(google.maps.Animation.BOUNCE);
     });
     
     markerData[0]={
@@ -87,7 +141,8 @@ function initMap() {
     google.maps.event.addListener(map, 'dragend', function(e) {
       
       infoWindow[0].close(map, marker[0])
-
+      before_page=currentPage;
+      currentPage=1;
       checkLatLng();
       $("#googlemap > div > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(4)").empty()
       latlng = new google.maps.LatLng( lat , lng ) ;
@@ -118,9 +173,11 @@ function initMap() {
       // clickイベントを取得するListenerを追加
       marker[0].addListener('click', () => {
         opencloseWindw(0);
+        marker[0].setAnimation(google.maps.Animation.BOUNCE);
       });
       
       getResult(lat, lng);
+      
     });
     
   };
@@ -143,6 +200,18 @@ const addInfo = (i, name, image, url) => {
   });
 }
 
+const change_list=i=>{
+  var index = showpage.indexOf(i);
+  var before_ele = showpage[0];
+  var after_ele
+  showpage[0] = i;
+  for(let j=1 ; j <= index ; j++){
+    after_ele = showpage[j];
+    showpage[j]=before_ele;
+    before_ele = after_ele;
+  }
+}
+
 const showGooglemap = (i, name, lati, longi) => {
   var latlng = new google.maps.LatLng( lati, longi );
   marker[i] = new google.maps.Marker({
@@ -152,9 +221,16 @@ const showGooglemap = (i, name, lati, longi) => {
   });
   
   // clickイベントを取得するListenerを追加
-  marker[i].addListener('click', () => {
-    $(`#row-${i}`).insertBefore('tbody tr:first');
+  marker[i].addListener('click', (e) => {
     
+    $(`#row-${i}`).insertBefore('tbody tr:first');
+    before_page=currentPage;
+    currentPage=1;
+    if(before_active != i){
+      change_list(i)
+      split_page();
+    }
+    console.log(showpage);
     opencloseWindw(i);
   });
   
@@ -175,8 +251,6 @@ const opencloseWindw = shop_id => {
   if(active[shop_id]===undefined){
     active[shop_id]=true;
   }
-  
-  
   
   latlng = new google.maps.LatLng( markerData[shop_id].lat , markerData[shop_id].lng ) ;
   map.center=latlng;
@@ -209,6 +283,8 @@ const opencloseWindw = shop_id => {
   }
   
   before_active = shop_id;
+  
+  console.log(marker[shop_id].getAnimation());
 }
 
 const showResult = result => {
@@ -260,6 +336,7 @@ const showResult = result => {
     $(`#${i}`).on('click', (e) => {
       var shop_id = Number(e.target.id);
       opencloseWindw(shop_id);
+      marker[shop_id].setAnimation(google.maps.Animation.BOUNCE);
     });
     
     console.log(markerData[i].name);
@@ -278,10 +355,14 @@ const showResult = result => {
   map.fitBounds(bounds,5);
   
   before_active = 0;
+  
+  init_list();
+  split_page();
 }
 
 
 const getResult = (lati, longi) => {
+  $('#b-1').addClass('active');
   const url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
   const params = {
     keyid: "",

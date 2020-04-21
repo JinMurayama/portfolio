@@ -1,3 +1,13 @@
+$( window ).on( 'load', function() {
+  var id    = location.hash;
+  var speed = 0;
+  var headerHight = 128; // 固定ヘッダーの高さ
+  if ( '' != id ) {
+    var pos = $( id ).offset().top - headerHight;
+    $( 'html' ).animate({ scrollTop: pos }, speed );
+  }
+});
+
 $('.animated').waypoint({
   handler(direction){
     if(direction === 'down'){
