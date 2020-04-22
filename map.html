@@ -100,7 +100,7 @@
       <div id="map-content" class="row">
         <div id="googlemap" class="col-lg-7 col-12">
         </div>
-        <div id="sidbar" class="col-lg-5">
+        <div id="sidbar" class="col-lg-5 hide_ele">
           <div id="search-form">
             <input
             id = "serach_form"
@@ -109,6 +109,10 @@
             type="text"
             placeholder="検索キーワードを入力してください"
             >
+            <button type="button" id="close-shoplist" class="close">
+            &times;
+          </button>
+
           </div>
           <table id="table" class="table">
             <thead>
@@ -119,10 +123,18 @@
           </table>
           <button-paging></button-paging>
         </div>
+        <div id="overlay" class="hide_ele"></div>  
+        <div id="shoplist">
+          <button class="btn btn-primary " id="button-shoplist">
+            飲食店一覧
+          </button>
+        </div>
       </div>
-      <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-        <img id="sponser" src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="265" height="65" border="0" alt="グルメ情報検索サイト　ぐるなび">
-      </a>
+      <div class="cledit">
+        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+          <img id="sponser" src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="265" height="65" border="0" alt="グルメ情報検索サイト　ぐるなび">
+        </a>
+      </div>
   </div>
 </section>
 

@@ -337,6 +337,13 @@ const showResult = result => {
       var shop_id = Number(e.target.id);
       opencloseWindw(shop_id);
       marker[shop_id].setAnimation(google.maps.Animation.BOUNCE);
+      if (window.matchMedia( "(min-width: 120px) and (max-width: 768px)" ).matches) {
+        $('#sidbar').removeClass('active_shoplist');
+        $('#overlay').removeClass('active_overlay');  
+        $('#close-shoplist').removeClass('active_close');
+        $('#sidbar').addClass('hide_ele');
+        $('#overlay').addClass('hide_ele');
+      }
     });
     
     console.log(markerData[i].name);
@@ -384,3 +391,20 @@ function checkLatLng(){
   lng = pos.lng();
   console.log(lat, lng);
 };
+
+$('#button-shoplist').on('click', () => {
+  $('#sidbar').removeClass('hide_ele');
+  $('#overlay').removeClass('hide_ele');
+  $('#sidbar').addClass('active_shoplist');
+  $('#overlay').addClass('active_overlay');
+  $('#close-shoplist').addClass('active_close');
+})
+
+$('#close-shoplist').on('click', () => {
+  $('#sidbar').removeClass('active_shoplist');
+  $('#overlay').removeClass('active_overlay');  
+  $('#close-shoplist').removeClass('active_close');
+  $('#sidbar').addClass('hide_ele');
+  $('#overlay').addClass('hide_ele');
+})
+
