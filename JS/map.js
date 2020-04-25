@@ -393,6 +393,7 @@ function checkLatLng(){
 };
 
 $('#button-shoplist').on('click', () => {
+  $('#sidbar').css('display', '');
   $('#sidbar').removeClass('hide_ele');
   $('#overlay').removeClass('hide_ele');
   $('#sidbar').addClass('active_shoplist');
@@ -404,6 +405,7 @@ $('#close-shoplist').on('click', () => {
   $('#sidbar').removeClass('active_shoplist');
   $('#overlay').removeClass('active_overlay');  
   $('#close-shoplist').removeClass('active_close');
+  $('#sidbar').css('display', '');
   $('#sidbar').addClass('hide_ele');
   $('#overlay').addClass('hide_ele');
 })

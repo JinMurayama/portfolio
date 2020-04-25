@@ -157,6 +157,11 @@ nav.cp_navi {
 	padding: 0 10px;
 	}
 	
+	#sidbar{
+		background: white;
+		display: none;
+	}
+	
 	.hide_ele{
 		position: absolute!important;
 		animation-name: fade-out;
@@ -196,8 +201,8 @@ nav.cp_navi {
 	  z-index: 1;
     display: block!important;
     position: absolute!important;
-    background: white;
     top: 45px;
+ 		background: white;
     min-height: 480px;
     max-height: 700px;
     height: auto;	

@@ -122,12 +122,20 @@
       </div>
     </div>
   </div>
+  <div id="all-overlay"></div>
+  <div id="channel-title"></div>
+    <button class="btn btn-primary " id="button-channellist">
+      channel一覧
+    </button>
   <div class="d-flex" id="chat-contents">
-    <div class="d-flex flex-column"id="side-bar">
+    <div class="flex-column"id="side-bar">
       <div id="function-contents">
         <div id="new_public_channel">
           <button v-on:click="openModal" type="button" class="btn btn-primary bt-contents">
             <i class="fas fa-plus mr-2"></i>新規Cnannelを作成
+          </button>
+          <button class="btn btn-danger" type="button" id="close-channellist">
+            Close
           </button>
           <div id="overlay" v-show="showContent">
             <div id="content">
@@ -135,7 +143,7 @@
               <form id = "new-channel-form">
                 <label for="room-name" class="col-form-label">ルーム名を入力してください</label>
                 <input id="room-name" type="text">
-                <button v-on:click="closeModal" class="btn btn-primary" type="submit">新規作成</button>
+                <button v-on:click="errorcloseModal" class="btn btn-primary" type="submit">新規作成</button>
               </form>
               <p id="create-room__help" ></p>
               <button class="btn btn-danger ml-0" v-on:click="closeModal">close</button>
@@ -153,7 +161,6 @@
         </div>
       </div>
     </div>
-    <div id="channel-title"></div>
     <section id="chat" class="view">
       
       <!-- メッセージ表示部 -->

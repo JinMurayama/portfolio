@@ -84,7 +84,14 @@ const modal = new Vue({
   methods:{
     openModal: function(){
       this.showContent = true;
-      scrollPosition = $(window).scrollTop();
+//      scrollPosition = $(window).scrollTop();
+      if (window.matchMedia('(max-width: 767px)').matches) {
+        //スマホ処理
+        scrollPosition = 2970
+      } else if (window.matchMedia('(min-width:768px)').matches) {
+        //PC処理
+        scrollPosition = 1721;
+      }
       console.log(scrollPosition);
       $('body').addClass('fixed').css({'top': -scrollPosition});
     },

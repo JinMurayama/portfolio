@@ -5,13 +5,25 @@
 #main-contents{
   height: 600px;
 }
+.cid-rUIzGN1Nle .title{
+  margin-bottom: 0!important;
+}
+
+#channel-title{
+  text-align: center;
+  
+}
+
+#channel-list .justify-content-between{
+  margin-left: 5px!important;
+}
 
 #side-bar{
-  width: 30%;
+  width: 35%;
   padding-right: 5px;
   margin-right: 20px;
   border-right: 1px solid black;
-}
+}  
 
 .bt-contents{
   border-radius: 10px;
@@ -30,7 +42,8 @@
   width:100%;
   height:100%;
   background-color:rgba(0,0,0,0.5);
-
+  border-radius: 0!important;
+  border: 0!important;
   /*　画面の中央に要素を表示させる設定　*/
   display: flex;
   align-items: center;
@@ -73,7 +86,8 @@
   margin-left: 13px;
   height: auto;
   max-height: 630px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #content{
@@ -117,7 +131,7 @@
   max-height: 480px;
   overflow: auto;
  /* min-height: calc(100vh - 51px - 46px + 6px);*/
-  margin: 0 auto 40px auto;
+  margin: 0 auto;
   padding: 10px 10px 6px 10px;
   border-width: 0 1px;
   border-style: solid;
@@ -221,6 +235,10 @@
   border-color: #d9f3d8 transparent;
 }
 
+#close-channellist{
+  display: none;
+}
+
 #comment-form {
   bottom: 0;
   left: 0;
@@ -263,12 +281,13 @@
 }
 
 #default button{
-  margin-right: 65.6px!important;
+  margin-right: 65.5px!important;
 }
 
 .room-list-name{
   position: relative;
   top: 25%;
+  width: 70%;
 }
 
 .room-join-flame{
@@ -284,19 +303,173 @@
 
 #form-comment{
   width: auto;
-  max-width: 400px;
+}
+
+#form-comment label{
+  display: block;
+}
+
+#form-comment span{
+  display: inline-block!important;
+  position: relative;
+  top: -17px;
 }
 
 #comment-form__text{
   min-height: 45px;
   padding: 10px 9px;
+  display: inline-block!important;
+  width: 80%;
 }
 
 #chat{
   width: auto;
-  min-width: 800px;
+  min-width: 685px;
 }
 
 #create-room__help{
   color:red;
+}
+
+#button-channellist{
+  display: none;    
+}
+
+@media only screen and (min-width: 120px) and (max-width: 767px) {
+  #chat{
+   width: auto; 
+   min-width: 0!important;
+  }
+  
+  #chat-contents{
+    display: block!important;
+  }
+  
+  #form-name{
+    width: 100vw;
+    max-width: 100%
+  }
+  
+  #channel-title{
+    display: inline-block;
+    float: left;
+    left: 3%;
+    text-align: left;
+    width: 70%;
+    position: relative;
+  }
+  
+  #default button{
+  margin-right: 62.5px!important;
+  }
+  
+  #side-bar{
+    display: none;
+    width: 100vw;
+    padding-bottom: 15px;
+  }
+  
+  #content{
+    width: 95%!important
+  }
+  
+  #button-channellist{
+    display: inline-block;
+    position: relative;
+    float: right;
+    right: 0%;
+    z-index: 1;
+  }
+  
+  #channel-contents{
+  max-height: 430px;
+  }
+  
+  #form-comment span{
+    position: relative;
+    top: -17px;
+    display: inline-block!important
+  }
+  
+  #form-comment label{
+    position: relative!important;
+    top: -17px;
+    display: inline-block!important;
+  }
+  
+  #name-form__text{
+    width: 50%!important;
+    margin-top: 5px;
+    margin-left: 25px;
+    margin-bottom: 5px;
+    display: inline-block!important
+  }
+  
+  #comment-form__text{
+    width:60%;
+    display: inline-block!important
+  }
+  
+  #message-list {
+    margin: 0!important;
+    width: 100vw;
+    min-height: 380px;
+    max-height: 330px;
+    overflow: auto;
+    /* min-height: calc(100vh - 51px - 46px + 6px); */
+    padding: 10px 10px 6px 10px;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: #ccc;
+    background-color: #f7f7ff;
+  }
+  
+.active_channellist{
+		animation-name: fade-in3;
+	  animation-duration: 1s; 
+	  animation-timing-function: ease-out; 
+	  animation-delay: 0s; 
+	  animation-iteration-count: 1; 
+	  animation-direction: normal; 
+	  animation-fill-mode: forwards; 
+	  z-index: 1;
+    display: block!important;
+    position: absolute!important;
+    top: 25%;
+ 		background: white;
+    max-height: 600px;
+    overflow: scroll;
+    height: auto;	
+}
+	
+@keyframes fade-in3 {
+ 0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.active_overlay {
+  /* viewpointを相対位置にし、全画面表示にする */
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);  /* 背景を半透明にする */
+  display: block!important;  /* HTML要素を非表示にする */
+  z-index: 1 /* 「メインのHTML要素」よりもスタックレベルを高くする */
+ }
+ 
+.active_close{
+ 	display: inline-block!important;
+ 	position: relative;
+  right: -12px;
+  float: right;
+ }
+
 }

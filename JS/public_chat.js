@@ -1,6 +1,8 @@
 /* jshint curly:true, debug:true */
 /* globals $, firebase, moment */
 
+var error
+
 //モーダルウィンドウの表示
 new Vue({
   el: "#new_public_channel",
@@ -10,10 +12,20 @@ new Vue({
   methods:{
     openModal: function(){
       this.showContent = true
-      
     },
     closeModal: function(){
-      this.showContent = false
+      this.showContent = false;
+      $('#create-room__help').hide();
+      $('#room-name').val('')
+    },
+    errorcloseModal: function(){
+      setTimeout(() => {
+        if(error===0){
+          this.showContent = false;
+          $('#create-room__help').hide();
+          $('#room-name').val('')
+        }
+      }, 10)
     }
   }
 });
@@ -178,7 +190,7 @@ const showRoom = (roomName) => {
     return;
   }
   currentRoomName = roomName;
-  $("#channel-title").text(currentRoomName);
+  $("#channel-title").text(currentRoomName+"チャンネル");
 
   clearMessages();
 
@@ -471,12 +483,15 @@ $('#new-channel-form').on('submit', (e) => {
 
   e.preventDefault();
 
+  error=0;
+
   // Firebaseのキーとして使えない文字が含まれているかチェック
   if (/[.$#[\]/]/.test(roomName)) {
     $('#create-room__help')
       .text('ルーム名に次の文字は使えません: . $ # [ ] /')
       .fadeIn();
     $('#create-room__room-name').addClass('has-error');
+    error=1;
     return;
   }
 
@@ -485,6 +500,7 @@ $('#new-channel-form').on('submit', (e) => {
       .text('1文字以上20文字以内で入力してください')
       .fadeIn();
     $('#create-room__room-name').addClass('has-error');
+    error=1;
     return;
   }
 
@@ -493,6 +509,7 @@ $('#new-channel-form').on('submit', (e) => {
       .text('同じ名前のルームがすでに存在します')
       .fadeIn();
     $('#create-room__room-name').addClass('has-error');
+    error=1;
     return;
   }
 
@@ -551,3 +568,22 @@ $(window).on('hashchange', () => {
 
 // ウインドウがリサイズされたら#message-listの高さを再調整
 $(window).on('resize', setMessageListMinHeight);
+
+
+$('#button-channellist').on('click', () => {
+  $('#side-bar').addClass('active_channellist');
+  $('#all-overlay').addClass('active_overlay');
+  $('#close-channellist').addClass('active_close');
+})
+
+$('#close-channellist').on('click', () => {
+  $('#side-bar').removeClass('active_channellist');
+  $('#all-overlay').removeClass('active_overlay');  
+  $('#close-channellist').removeClass('active_close');
+})
+
+$(document).on('click', '.room-join-button', () => {
+  $('#side-bar').removeClass('active_channellist');
+  $('#all-overlay').removeClass('active_overlay');  
+  $('#close-channellist').removeClass('active_close');
+});
