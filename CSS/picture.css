@@ -137,6 +137,13 @@ nav.cp_navi {
 	opacity: 1!important;
 }
 
+#img{
+	transform: scaleX(-1);  /* 左右反転させる */
+	width: 650px;
+	height: 490px;
+}
+
+
 #dat{
 	display: inline-block;
 	float: right;
@@ -164,6 +171,12 @@ nav.cp_navi {
 	
 	#sidbar{
 		margin-left: 12px;
+	}
+	
+	#img{
+		transform: scaleX(-1);  /* 左右反転させる */
+		width: 100vw!important;
+		height: 300px!important;
 	}
 	
 	#dat{
