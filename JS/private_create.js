@@ -87,12 +87,12 @@ const modal = new Vue({
 //      scrollPosition = $(window).scrollTop();
       if (window.matchMedia('(max-width: 767px)').matches) {
         //スマホ処理
-        scrollPosition = 2970
+        scrollPosition = 3000;
       } else if (window.matchMedia('(min-width:768px)').matches) {
         //PC処理
         scrollPosition = 1721;
       }
-      console.log(scrollPosition);
+      $('#all-overlay').addClass('active_overlay');
       $('body').addClass('fixed').css({'top': -scrollPosition});
     },
     closeModal: function(){
@@ -101,6 +101,7 @@ const modal = new Vue({
       window.scrollTo( 0 , scrollPosition );
       $('#create-room__help').hide();
       $('#create-room__success').hide();
+      $('#all-overlay').removeClass('active_overlay');
       this.InputForm="";
       this.isActive=false;
     },

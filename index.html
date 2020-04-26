@@ -83,8 +83,8 @@ $('a[href^=#]').on('click', () => {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link text-black display-4" href="#webhock">
-                        webhock
+                    <a class="nav-link link text-black display-4" href="#picture">
+                        picture
                     </a>
                 </li>
                 <li class="nav-item">
@@ -232,8 +232,10 @@ $('a[href^=#]').on('click', () => {
     </div>
 </section>
 
+
 <div id="chat"></div>
 <section class="step3 cid-rUIz7hI3DH animated" id="step3-6">
+    <div id="all-overlay"></div>
     <div class="container">
         <h2 class="mbr-section-title pb-3 mbr-fonts-style align-center display-2">
             Real Time Chat</h2>
@@ -360,14 +362,11 @@ $('a[href^=#]').on('click', () => {
     </div>
 </section>
 
-<div id="webhock"></div>
+<div id="picture"></div>
 <section class="step3 cid-rUIz8gCfHN animated" id="step3-8">
     <div class="container">
         <h2 class="mbr-section-title pb-3 mbr-fonts-style align-center display-2">
-            webhock</h2>
-        <h3 class="mbr-section-subtitle pb-5 mbr-fonts-style align-center display-5">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit
-        </h3>
+            picture recognition</h2>
         <div class="media-container-row">
             <div class="media-block" style="width: 49%;">
                 <div class="mbr-figure">
@@ -377,16 +376,12 @@ $('a[href^=#]').on('click', () => {
             <div class="step-container">
                 <div class="card separline pb-4">
                     <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                1
-                            </div>
-                        </div>          
                         <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Specification
+                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
+                              概要
                             </h4>
                             <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.
+                              出されたお題の表情をして、スコアを超えたら写真をとる
                             </p>
                         </div>
                     </div>
@@ -394,34 +389,25 @@ $('a[href^=#]').on('click', () => {
 
                 <div class="card separline pb-4">
                     <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                2
-                            </div>
-                        </div>          
                         <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Project Planning</h4>
-                            <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="step-element d-flex">
-                        <div class="step-wrapper pr-3">
-                            <div class="step d-flex align-items-center justify-content-center">
-                                3
-                            </div>
-                        </div>          
-                        <div class="step-text-content">
-                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">Deployment
+                            <h4 class="mbr-step-title pb-3 mbr-fonts-style display-5">
+                              機能の説明
                             </h4>
                             <p class="mbr-step-text mbr-fonts-style display-7">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam erat libero, bibendum in libero tempor, luctus volutpat ligula. Integer fringilla porttitor pretium.</p>
+                              ランダムにお題を出します。カメラを起動して出されたお題の顔をしてください。
+                              スコアが表示されるので、一定のスコアの値を超えたら、写真が撮れるようになり、ツイートできるようになります。
+                              現在、作成中！
+                            </p>
                         </div>
                     </div>
                 </div>
+                
+                <div id='picture-content'>
+                  <button class="btn btn-primary" id='picture-button' onclick="location.href='picture.html'" type="button" >
+                    お題画像認識サイトへ行く
+                  </button>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -512,7 +498,7 @@ $('a[href^=#]').on('click', () => {
                         <a class="text-white mbr-bold" href="#map">map</a>
                     </li>
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white mbr-bold" href="#webhock">webhock</a>
+                        <a class="text-white mbr-bold" href="#picture">picture</a>
                     </li>
                     <li class="foot-menu-item mbr-fonts-style display-7">
                         <a class="text-white mbr-bold" href="#mashup">mashup</a>

@@ -48,10 +48,20 @@ body.fixed {
     border: 2px solid black;
     border-radius: 20px;
     width: 100%;
-    /*　画面の中央に要素を表示させる設定　*/
+    /*　画面の中央に要S素を表示させる設定　*/
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  #new-channel-form .btn-primary{
+    margin-left: 5px;
+    position: relative;
+    top: -2px;
+  }
+  
+  #qrcode canvas{
+    left: 0px;
   }
 }
 
@@ -142,4 +152,20 @@ canvas{
 
 #step3-7 .step-container{
   padding-left: 32px!important;
+}
+
+.active_overlay{
+  /* viewpointを相対位置にし、全画面表示にする */
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);  /* 背景を半透明にする */
+  display: block!important;  /* HTML要素を非表示にする */
+  z-index: 1 /* 「メインのHTML要素」よりもスタックレベルを高くする */
+}
+
+#step3-6{
+  z-index: 1;
 }

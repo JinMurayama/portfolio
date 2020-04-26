@@ -9,9 +9,8 @@
   <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
   <meta name="description" content="Web Site Builder Description">
   
-  
-  <title>Google Maps API</title>
-  <link rel="stylesheet" href="CSS/map.css">
+  <title>picture recognition</title>
+  <link rel="stylesheet" href="CSS/picture.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -21,6 +20,8 @@
   <link rel="stylesheet" href="assets/tether/tether.min.css">
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>  
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
 
 </head>
 <body>
@@ -88,72 +89,53 @@
         <div class="row justify-content-between">
             <div class="title col-12 col-lg-12">
                 <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">
-                    Google Map
+                    picuture recgnition
                 </h2>
                 <h3 class="mbr-section-subtitle align-center mbr-light pb-3 mbr-fonts-style display-5">
-                    Google Map APIとぐるなびAPIの掛け合わせ
+                    今から出されるお題の表情をしてください！
                 </h3>
             </div>
         </div>
     </div>
-    <div id="content" class="container">
-      <div id="map-content" class="row">
-        <div id="googlemap" class="col-lg-7 col-12">
-        </div>
-        <div id="sidbar" class="col-lg-5">
-          <div id="search-form">
-            <input
-            id = "serach_form"
-            v-model="search_text"
-            v-on:input="search_shop"
-            type="text"
-            placeholder="検索キーワードを入力してください"
-            >
-            <button type="button" id="close-shoplist" class="close">
-            &times;
-          </button>
-
-          </div>
-          <table id="table" class="table">
-            <thead>
-              <tr>
-                <th>飲食店一覧</th>
-              </tr>
-            </thead>
-          </table>
-          <button-paging></button-paging>
-        </div>
-        <div id="overlay" class="hide_ele"></div>  
-        <div id="shoplist">
-          <button class="btn btn-primary " id="button-shoplist">
-            飲食店一覧
-          </button>
-        </div>
-      </div>
-      <div class="cledit">
-        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-          <img id="sponser" src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="265" height="65" border="0" alt="グルメ情報検索サイト　ぐるなび">
-        </a>
-      </div>
-  </div>
 </section>
+<div id="face-theme">
+  <h2 id="theme-title">
+    お題：
+  </h2>
+  <h2 id="theme-face">
+    {{faceExpre}}
+  </h2>
+</div>
 
-  <script src="assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="assets/popper/popper.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/smoothscroll/smooth-scroll.js"></script>
-  <script src="assets/dropdown/js/nav-dropdown.js"></script>
-  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
-  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
-  <script src="assets/tether/tether.min.js"></script>
-  <script src="assets/theme/js/script.js"></script>
-  <script src="assets/formoid/formoid.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  
-    <!-- google map apiの実装!-->
-  <script src="JS/map.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5PnN0928erBiNqIt_l9idktLcO0egCIc&callback=initMap"></script>
+<div id="container">  <!-- video の上に canvas をオーバーレイするための div 要素 -->
+  <video id="video" width="650" height="490" autoplay></video>  <!-- カメラ映像を流す video -->
+  <canvas id="canvas" width="650" height="490"></canvas>        <!-- 重ねて描画する canvas -->
+</div>
+<img id="img">
+<div id="sidbar">
+  <button type="button" class="btn btn-success" id="next-theme" v-on:click="click_theme()">次のお題にいく</button>
+  <div id="dat"></div>  <!-- データ表示用 div 要素 -->
+</div>
+
+
+<!-- clmtrackr 関連ファイルの読み込み -->
+<script src="JS/clmtrackr.js"></script>          <!-- clmtrackr のメインライブラリの読み込み -->
+<script src="JS/model_pca_20_svm.js"></script>   <!-- 顔モデル（※）の読み込み -->
+<script src="JS/emotionClassifier.js"></script>  <!-- ★感情を分類する外部関数の読み込み -->
+<script src="JS/emotionModel.js"></script>       <!-- ★感情モデル（※2）の読み込み -->
+
+<script src="JS/picture.js"></script>
+
+<script src="assets/popper/popper.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/smoothscroll/smooth-scroll.js"></script>
+<script src="assets/dropdown/js/nav-dropdown.js"></script>
+<script src="assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+<script src="assets/tether/tether.min.js"></script>
+<script src="assets/theme/js/script.js"></script>
+<script src="assets/formoid/formoid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
   
 </body>
 </html>

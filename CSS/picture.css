@@ -1,0 +1,173 @@
+.title{
+  margin-bottom: 0!important;
+}
+
+.cid-rUIzGN1Nle{
+	padding-bottom: 0!important;
+}
+
+#content{
+  width: 100vw!important;
+  max-width: vw!important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+td{
+  width:49%;
+}
+
+.table{
+  margin-bottom: 0px!important;
+}
+
+thead, tbody{
+  display: block;
+}
+
+tbody {
+  display: inline-block;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+
+tbody shops_name{
+  opacity: 0.5;
+}
+
+nav.cp_navi *, nav.cp_navi *:after, nav.cp_navi *:before {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+nav.cp_navi a {
+	text-decoration: none;
+}
+nav.cp_navi {
+	margin-top: 0px;
+	text-align: center;
+}
+.cp_navi .cp_pagination {
+	display: inline-block;
+	height: 70px;
+	margin-top: 1em;
+	padding: 0 20px;
+	border-radius: 35px;
+	background-color: #eeeeee;
+}
+.cp_navi .cp_pagenum {
+	font-size: 1.2em;
+	line-height: 70px;
+	display: block;
+	float: left;
+	padding: 0 19px;
+	transition: 400ms ease;
+	letter-spacing: 0.1em;
+	color: #595959;
+}
+.cp_navi .cp_pagenum:hover,
+.cp_navi .cp_pagenum.current {
+	color: #ffffff;
+	background-color: #00BCD4;
+}
+.cp_navi .cp_pagenum.prev:hover,
+.cp_navi .cp_pagenum.next:hover {
+	color: #00BCD4;
+	background-color: transparent;
+}
+
+#shoplist{
+	display: none;
+}
+
+#container {              /* コンテナ用の div について */
+  position: relative;     /* 座標指定を相対値指定にする */
+	text-align: center;
+}
+#video {                  /* カメラ映像を流す video について */
+  transform: scaleX(-1);  /* 左右反転させる */
+  position: relative;
+/*  width: 100vw;
+  height: 70vh;*/
+  width:650px;
+  height: 490px;
+}
+#canvas {                 /* 描画用の canvas について */
+  transform: scaleX(-1);  /* 左右反転させる */
+  position: absolute;     /* 座標指定を絶対値指定にして */
+  left: 27%;                /* X座標を0に */
+  width:650px;
+  height: 490px;
+  display: inline-block;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+}
+
+#face-theme{
+	text-align: center;
+}
+
+#face-theme h2{
+	display: inline-block;
+}
+
+#next-theme{
+	margin-left: 0;
+}
+
+#sidbar{
+	width: 650px;
+	margin: 0 auto;
+}
+
+.btn-success:hover{
+	opacity: 1!important
+}
+
+.btn:hover{
+	opacity: 1!important
+}
+
+.btn-success:focus{
+	opacity: 1!important;
+}
+
+#dat{
+	display: inline-block;
+	float: right;
+}
+
+@media only screen and (max-width: 960px) {
+}
+@media only screen and (min-width: 120px) and (max-width: 767px) {
+
+	
+	#video{
+		width: 100vw!important;
+		height: 300px!important;
+	}
+	
+	#canvas{
+		width: 100vw!important;
+		height: 300px!important;
+	}
+	
+	#sidbar{
+	width: 100vw!important;
+	margin: 0 auto;
+	}
+	
+	#sidbar{
+		margin-left: 12px;
+	}
+	
+	#dat{
+		padding-right: 12px;
+	}
+	
+}
