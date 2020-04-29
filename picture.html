@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129877335-3"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-129877335-3');
+</script>
+
+  
   <!-- Site made with Mobirise Website Builder v4.12.3, https://mobirise.com -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -111,9 +122,14 @@
   <video id="video" width="650" height="490" autoplay></video>  <!-- カメラ映像を流す video -->
   <canvas id="canvas" width="650" height="490"></canvas>        <!-- 重ねて描画する canvas -->
 </div>
-<img id="img">
+<div id="img_div">
+  <img id="img">
+</div>
 <div id="sidbar">
-  <button type="button" class="btn btn-success" id="next-theme" v-on:click="click_theme()">次のお題にいく</button>
+  <div id = "button">
+    <button type="button" class="btn btn-success" id="next-theme" v-on:click="click_theme()">次のお題にいく</button>
+    <button type="button" class="btn btn-success" id="again-theme" v-on:click="again_theme()">同じお題でチャレンジ</button>
+  </div>
   <div id="dat"></div>  <!-- データ表示用 div 要素 -->
 </div>
 

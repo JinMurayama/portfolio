@@ -141,12 +141,26 @@ nav.cp_navi {
 	transform: scaleX(-1);  /* 左右反転させる */
 	width: 650px;
 	height: 490px;
+	display:none;
+	text-align: center;
 }
 
+#img_div{
+	display: none;
+	text-align: center;
+}
+
+.active{
+	display: block!important;
+}
 
 #dat{
 	display: inline-block;
 	float: right;
+}
+
+#button{
+	float:left;
 }
 
 @media only screen and (max-width: 960px) {
@@ -181,6 +195,15 @@ nav.cp_navi {
 	
 	#dat{
 		padding-right: 12px;
+	}
+	
+	#button{
+		width: 160px!important;
+		
+	}
+	
+	#again-theme{
+		margin-left: 0px!important;
 	}
 	
 }

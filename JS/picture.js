@@ -111,8 +111,10 @@ function showEmotionData(emo) {
       console.log(emo[face_random].value.toFixed(1));
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       //canvasを更にimgに書き出す方法
-      var img = document.getElementById('img');
-      img.src = canvas.toDataURL('image/png');
+//      var img = document.getElementById('img');
+//      $('#img').css("display","inline-block")
+//      $('#img_div').addClass('active')
+//      img.src = canvas.toDataURL('image/png');
       face_random = 6;
     }
     
@@ -139,6 +141,14 @@ new Vue({
   methods:{
     click_theme:function(){
       showTheme.faceExpre = face_show_theme();
+      $('#img').css('display', 'none');
+      $('#img_div').removeClass('.active');
+    },
+    again_theme:function(){
+      face_random = before_face;
+      $('#img').css('display', 'none');
+      $('#img_div').removeClass('.active');
+
     },
   }
 })
