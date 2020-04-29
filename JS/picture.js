@@ -43,6 +43,9 @@ var media = navigator.mediaDevices.getUserMedia({       // メディアデバイ
   audio: false                                          // マイクの音声は使わない
 });
 media.then((stream) => {                                // メディアデバイスが取得できたら
+  video.setAttribute('autoplay', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
   video.srcObject = stream;                             // video 要素にストリームを渡す
 });
  
@@ -71,7 +74,6 @@ function drawLoop() {
 drawLoop();                                             // drawLoop 関数をトリガー
 
 /*
-
 // 顔部品（特徴点）の位置データを表示する showData 関数
 function showData(pos) {
   var str = "";                                         // データの文字列を入れる変数
@@ -84,7 +86,6 @@ function showData(pos) {
   var dat = document.getElementById("dat");             // データ表示用div要素の取得
   dat.innerHTML = str;                                  // データ文字列の表示
 }
-
 */
 
 /*
