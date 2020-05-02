@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129877335-3"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -11,6 +11,7 @@ gtag('js', new Date());
 gtag('config', 'UA-129877335-3');
 </script>
 
+  
   <!-- Site made with Mobirise Website Builder v4.12.3, https://mobirise.com -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,9 +20,8 @@ gtag('config', 'UA-129877335-3');
   <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
   <meta name="description" content="Web Site Builder Description">
   
-  
-  <title>Google Maps API</title>
-  <link rel="stylesheet" href="CSS/map.css">
+  <title>chart</title>
+  <link rel="stylesheet" href="CSS/statistics.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -31,6 +31,11 @@ gtag('config', 'UA-129877335-3');
   <link rel="stylesheet" href="assets/tether/tether.min.css">
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>  
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script type="text/javascript"
+ src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
+</script>
 
 </head>
 <body>
@@ -98,72 +103,34 @@ gtag('config', 'UA-129877335-3');
         <div class="row justify-content-between">
             <div class="title col-12 col-lg-12">
                 <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">
-                    Google Map
+                    chart
                 </h2>
                 <h3 class="mbr-section-subtitle align-center mbr-light pb-3 mbr-fonts-style display-5">
-                    Google Map APIとぐるなびAPIの掛け合わせ
+                    e-Statで得た情報をChart.jsで描画する</br>
+                　　正確なデータではございませんので、ご注意ください。
                 </h3>
             </div>
+            <canvas id="chart_cv"></canvas>
         </div>
     </div>
-    <div id="content" class="container">
-      <div id="map-content" class="row">
-        <div id="googlemap" class="col-lg-7 col-12">
-        </div>
-        <div id="sidbar" class="col-lg-5">
-          <div id="search-form">
-            <input
-            id = "serach_form"
-            v-model="search_text"
-            v-on:input="search_shop"
-            type="text"
-            placeholder="検索キーワードを入力してください"
-            >
-            <button type="button" id="close-shoplist" class="close">
-            &times;
-          </button>
-
-          </div>
-          <table id="table" class="table">
-            <thead>
-              <tr>
-                <th>飲食店一覧</th>
-              </tr>
-            </thead>
-          </table>
-          <button-paging></button-paging>
-        </div>
-        <div id="overlay" class="hide_ele"></div>  
-        <div id="shoplist">
-          <button class="btn btn-primary " id="button-shoplist">
-            飲食店一覧
-          </button>
-        </div>
-      </div>
-      <div class="cledit">
-        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
-          <img id="sponser" src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="265" height="65" border="0" alt="グルメ情報検索サイト　ぐるなび">
-        </a>
-      </div>
-  </div>
 </section>
 
-  <script src="assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="assets/popper/popper.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/smoothscroll/smooth-scroll.js"></script>
-  <script src="assets/dropdown/js/nav-dropdown.js"></script>
-  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
-  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
-  <script src="assets/tether/tether.min.js"></script>
-  <script src="assets/theme/js/script.js"></script>
-  <script src="assets/formoid/formoid.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  
-    <!-- google map apiの実装!-->
-  <script src="JS/map.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5PnN0928erBiNqIt_l9idktLcO0egCIc&callback=initMap"></script>
+<div id="credit">
+  「このサービスは、政府統計総合窓口(e-Stat)のAPI機能を使用していますが、</br>サービスの内容は国によって保証されたものではありません。」
+</div>
+
+<script src="JS/statistics.js"></script>
+
+<script src="assets/popper/popper.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/smoothscroll/smooth-scroll.js"></script>
+<script src="assets/dropdown/js/nav-dropdown.js"></script>
+<script src="assets/dropdown/js/navbar-dropdown.js"></script>
+<script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+<script src="assets/tether/tether.min.js"></script>
+<script src="assets/theme/js/script.js"></script>
+<script src="assets/formoid/formoid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
   
 </body>
 </html>

@@ -150,10 +150,6 @@ canvas{
   left: 0%;
 }
 
-#step3-7 .step-container{
-  padding-left: 32px!important;
-}
-
 .active_overlay{
   /* viewpointを相対位置にし、全画面表示にする */
   width: 100vw;
