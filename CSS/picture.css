@@ -158,9 +158,40 @@ nav.cp_navi {
 	display: inline-block;
 	float: right;
 }
+.twitter{
+  display: inline-block;	
+}
+
+#twitterButton{
+	margin-left: 0;
+}
+
+#navText{
+	width: 93%;
+}
+
+#text_copy{
+	margin-left: 0;
+	display: inline-block;
+}
+
+#savebutton{
+	margin-left: 0;
+	display: inline-block;
+}
 
 #button{
+	width: 83%;
 	float:left;
+}
+
+i{
+	margin-right: 10px;
+	margin-left: 7px;
+}
+
+#text_input{
+	margin-right: 10px;
 }
 
 @media only screen and (max-width: 960px) {

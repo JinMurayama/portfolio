@@ -11,9 +11,11 @@ var max = 5 ;
 var face_random = 5;
 var before_face = 6;
  
+var face_str;
+ 
 const face_show_theme = () => {
 
-  var face_str;
+
 
   while(1){
     face_random = Math.floor( Math.random() * (max + 1 - min) ) + min ;
@@ -102,6 +104,22 @@ function drawStamp(pos, img, bNo, scale, hShift, vShift) {
   context.drawImage(img, imgL, imgT, imgW, imgH);       // 画像を描く
 }
 */
+
+var downloadLink = document.getElementById('download_link');
+var filename = 'your-filename.png';
+
+
+$(document).on('click', "#savebutton", () => {
+  if (canvas.msToBlob) {
+    var blob = canvas.msToBlob();
+    window.navigator.msSaveBlob(blob, filename);
+  } else {
+    downloadLink.href = canvas.toDataURL('image/png');
+    downloadLink.download = filename;
+    downloadLink.click();
+  }
+});
+
 // ★感情データの表示
 function showEmotionData(emo) {
   var str ="";                                          // データの文字列を入れる変数
@@ -110,19 +128,32 @@ function showEmotionData(emo) {
          + emo[i].value.toFixed(1) + "<br>";            // 感情の程度（小数第一位まで）
     if(emo[face_random].value.toFixed(1) > 0.4) {                          // ★感情 happy の値が一定値より大きければ
       console.log(emo[face_random].value.toFixed(1));
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      emo_score = emo[face_random].value.toFixed(1);
       //canvasを更にimgに書き出す方法
 //      var img = document.getElementById('img');
 //      $('#img').css("display","inline-block")
 //      $('#img_div').addClass('active')
 //      img.src = canvas.toDataURL('image/png');
-      face_random = 6;
+      setTimeout(() =>  {
+        textTheme();
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        face_random = 6;
+      }, 50);
+
     }
     
   }
   var dat = document.getElementById("dat");             // データ表示用div要素の取得
   dat.innerHTML = str;                                  // データ文字列の表示
 }
+
+function textTheme(){
+  $('#text_input').val('');
+  $('#text_input').val('お題：' + face_str + '　点数：' + emo_score + "　#表情点数メーカー")
+}
+
+
+var emo_score
 
 const showTheme = new Vue({
   el:'#face-theme',
@@ -139,6 +170,9 @@ const showTheme = new Vue({
 
 new Vue({
   el:'#sidbar',
+  data:{
+    text:'',
+  },
   methods:{
     click_theme:function(){
       showTheme.faceExpre = face_show_theme();
@@ -150,6 +184,11 @@ new Vue({
       $('#img').css('display', 'none');
       $('#img_div').removeClass('.active');
 
+    },
+    copyToClipboard(){
+      $('#text_input').select();
+      
+      document.execCommand("Copy");
     },
   }
 })

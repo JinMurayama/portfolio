@@ -289,7 +289,7 @@ const opencloseWindw = shop_id => {
 
 const showResult = result => {
   let i = 1;
-  var maxlat = 0;//最大緯度
+  var maxlat = 0 //最大緯度
   var maxlng = 0;//最大経度
   var minlat = 150;//最小緯度
   var minlng = 150;//最小経度

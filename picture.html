@@ -19,6 +19,7 @@ gtag('config', 'UA-129877335-3');
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <link rel="shortcut icon" href="assets/images/logo2.png" type="image/x-icon">
   <meta name="description" content="Web Site Builder Description">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   
   <title>picture recognition</title>
   <link rel="stylesheet" href="CSS/picture.css">
@@ -129,6 +130,26 @@ gtag('config', 'UA-129877335-3');
   <div id = "button">
     <button type="button" class="btn btn-success" id="next-theme" v-on:click="click_theme()">次のお題にいく</button>
     <button type="button" class="btn btn-success" id="again-theme" v-on:click="again_theme()">同じお題でチャレンジ</button>
+    <div class="twitter">
+      <a id="twitterButton"target="_brank" href="https://twitter.com/" class="btn btn-primary" >
+       Twitterを開く
+      </a>
+    </div>
+    <button type="button" class="btn btn-success" id="savebutton" href="img1">
+      <i class="fas fa-download"></i>画像を保存
+    </button>
+    <a id="download_link"></a>
+    <div id="copytext">
+      <input id="text_input" placeholder="点数が表示されます" type="text">
+      <button class="btn btn-success" id="text_copy" v-on:click="copyToClipboard" type="button">
+        テキストをコピー
+      </button>
+    </div>
+    <div id="navText">
+      <p>
+        良かったら、画像を保存し、テキストをコピーし、手動で呟いてください！
+      </p>
+    </div>
   </div>
   <div id="dat"></div>  <!-- データ表示用 div 要素 -->
 </div>
@@ -152,6 +173,6 @@ gtag('config', 'UA-129877335-3');
 <script src="assets/theme/js/script.js"></script>
 <script src="assets/formoid/formoid.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
-  
+
 </body>
 </html>
