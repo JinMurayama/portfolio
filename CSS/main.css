@@ -63,6 +63,16 @@ body.fixed {
   #qrcode canvas{
     left: 0px;
   }
+  
+  #google-block{
+    margin-right: 0!important;
+  }
+  
+  #self_logo{
+  width: 80vw!important;
+  height: 100%!important;
+  border-radius: 250px;
+  }
 }
 
 .animated{
@@ -77,6 +87,10 @@ body.fixed {
   margin-top: 50px;
 }
 
+#google-block{
+  margin-right: 32px;
+}
+
 .sub-contents-button{
   display: inline;
   font-family: inherit;
@@ -86,6 +100,45 @@ body.fixed {
   border-radius: 20px;
 }
 
+#selftext{
+  font-size: 20px!important;
+}
+
+#database{
+  width: 24%;
+  height: 50%;
+  color: #149DCC;
+}
+
+#cording{
+  width: 35%;
+  height: 50%;
+  color: #149DCC;
+}
+
+#github:hover{
+  text-decoration: underline;
+}
+
+#server{
+  width: 28%;
+  height: 1%;
+  color: #149DCC;
+}
+
+#header1-0 h2{
+  text-align: center;
+}
+
+#features11-3 p{
+  font-size: 21px;
+}
+
+#self_logo{
+  width: 500px;
+  height: 500px;
+  border-radius: 250px;
+}
 
 .icon-function{
   margin-right: 5px;
